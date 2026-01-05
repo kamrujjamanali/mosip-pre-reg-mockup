@@ -1,0 +1,31 @@
+<header class="govBanner" [attr.data-theme]="theme">
+    <div class="bannerInner">
+
+        <!-- LEFT -->
+        <div class="leftBlock">
+            <img class="crest" [src]="crestUrl" alt="St. Vincent Coat of Arms" />
+
+            <div class="leftText">
+                <div class="leftTitle">{{ leftTitle }}</div>
+                <!-- <div class="leftSub">{{ leftSub }}</div> -->
+            </div>
+        </div>
+
+        <!-- DIVIDER -->
+        <div class="divider"></div>
+
+        <!-- RIGHT -->
+        <div class="rightBlock">
+            <div class="rightTitle">{{ rightTitle }}</div>
+            <div class="rightSub">{{ rightSub }}</div>
+
+
+        </div>
+        <div class="themeFloating">
+            <select [ngModel]="theme" (ngModelChange)="changeTheme($event)">
+              <option *ngFor="let t of themes" [value]="t.name">{{ t.label }}</option>
+            </select>
+          </div>
+
+    </div>
+</header>

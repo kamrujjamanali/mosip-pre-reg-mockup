@@ -1,0 +1,357 @@
+<ng-container *ngIf="theme != 'default'">
+  <app-home-banner></app-home-banner>
+</ng-container>
+<div class="dashPage" [attr.data-theme]="theme">
+
+  <!-- ===== DEFAULT/MODERN TOP ROW ===== -->
+  <div class="dashTop" *ngIf="theme !== 'svg_gov'">
+    <div class="dashTitle">Your Applications</div>
+
+    <div class="dashActions">
+      <button mat-raised-button type="button" class="btnGrey" (click)="bookOrModifyAppointment()">
+        <mat-icon class="btnIcon">event_note</mat-icon>
+        BOOK/MODIFY APPOINTMENT
+      </button>
+
+      <button mat-raised-button type="button" class="btnPink" (click)="preRegistration()">
+        <mat-icon class="btnIcon">add</mat-icon>
+        PRE REGISTRATION
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== GOVT LAYOUT (list + details panel) ===== -->
+  <ng-container *ngIf="theme === 'svg_gov'; else defaultOrModern">
+
+    <!-- ✅ NEW: Full-bleed govt header (best look) -->
+    <div class="govHeader">
+      <div class="govHeaderInner">
+        <div class="govHeaderActions">
+          <button mat-raised-button type="button" class="btnGrey" (click)="bookOrModifyAppointment()">
+            <mat-icon class="btnIcon">event_note</mat-icon>
+            BOOK/MODIFY APPOINTMENT
+          </button>
+
+          <button mat-raised-button type="button" class="btnPink" (click)="preRegistration()">
+            <mat-icon class="btnIcon">add</mat-icon>
+            PRE REGISTRATION
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ NEW: Govt tools row (search + filter + sort) -->
+    <div class="govTools">
+      <div class="govToolsLeft">
+        <div class="govToolsTitle">Your Applications</div>
+        <div class="govToolsHint">{{ filteredGovApps.length }} result(s)</div>
+      </div>
+
+      <div class="govToolsRight">
+        <div class="govSearch">
+          <mat-icon class="sIcon">search</mat-icon>
+          <input
+            class="govSearchInput"
+            [(ngModel)]="govSearch"
+            placeholder="Search by Application ID / Name / Language"
+          />
+          <button
+            mat-icon-button
+            type="button"
+            class="sClear"
+            *ngIf="govSearch"
+            (click)="clearGovSearch()"
+            title="Clear"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        <div class="govSelectWrap">
+          <span class="govSelectLabel">Status</span>
+          <select class="govMiniSelect" [(ngModel)]="govStatusFilter">
+            <option value="ALL">All</option>
+            <option value="Pending Appointment">Pending Appointment</option>
+            <option value="Completed">Completed</option>
+            <option value="Draft">Draft</option>
+          </select>
+        </div>
+
+        <div class="govSelectWrap">
+          <span class="govSelectLabel">Sort</span>
+          <select class="govMiniSelect" [(ngModel)]="govSort">
+            <option value="NEWEST">Newest</option>
+            <option value="OLDEST">Oldest</option>
+            <option value="NAME_ASC">Name (A-Z)</option>
+            <option value="NAME_DESC">Name (Z-A)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="govBody">
+      <!-- Left: list -->
+      <div class="govList">
+        <!-- <div class="sectionLabel">Applications</div> -->
+
+        <!-- ✅ NEW: empty state -->
+        <div class="govEmpty" *ngIf="filteredGovApps.length === 0">
+          <div class="govEmptyIcon">
+            <mat-icon>inbox</mat-icon>
+          </div>
+          <div class="govEmptyTitle">No applications found</div>
+          <div class="govEmptyHint">Try changing search/filter, or create a new pre-registration.</div>
+          <button mat-raised-button type="button" class="btnPink" (click)="preRegistration()">
+            <mat-icon class="btnIcon">add</mat-icon>
+            PRE REGISTRATION
+          </button>
+        </div>
+
+        <!-- ✅ UPDATED: use filtered list + trackBy -->
+        <div class="govAppRow"
+             *ngFor="let app of filteredGovApps; trackBy: trackByAppId"
+             [class.selected]="app.selected"
+             (click)="toggleSelect(app, true)">
+
+          <mat-checkbox class="rowCheck" [(ngModel)]="app.selected" (click)="$event.stopPropagation()"
+            (ngModelChange)="toggleSelect(app, $event)">
+          </mat-checkbox>
+
+          <div class="rowMain">
+            <div class="rowTopLine">
+              <span class="rowAppId">Application ID</span>
+              <span class="rowIdValue">{{ app.id }}</span>
+            </div>
+
+            <div class="rowMeta">
+              <span>Name: <b>{{ app.name }}</b></span>
+              <span class="dot">•</span>
+              <span>Language: <b>{{ app.languages }}</b></span>
+              <span class="dot">•</span>
+              <span class="pill" [class.pPending]="app.status==='Pending Appointment'"
+                                [class.pDone]="app.status==='Completed'"
+                                [class.pDraft]="app.status==='Draft'">
+                {{ app.status }}
+              </span>
+            </div>
+          </div>
+
+          <button mat-icon-button type="button" class="rowDelete"
+            (click)="$event.stopPropagation(); deleteApplication(app)" title="Delete">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: details -->
+      <div class="govDetails">
+        <div class="detailsHeader">
+          <div class="detailsTitle">Application Details</div>
+          <div class="detailsHint">Select an application to view details</div>
+        </div>
+
+        <ng-container *ngFor="let app of apps">
+          <div class="detailsCard" *ngIf="app.selected">
+            <div class="detailsGrid">
+              <div class="dRow">
+                <div class="k">Application ID</div>
+                <div class="v">{{ app.id }}</div>
+              </div>
+              <div class="dRow">
+                <div class="k">Name</div>
+                <div class="v">{{ app.name }}</div>
+              </div>
+              <div class="dRow">
+                <div class="k">Appointment Date</div>
+                <div class="v">{{ app.appointmentDate }}</div>
+              </div>
+              <div class="dRow">
+                <div class="k">Status</div>
+                <div class="v status">{{ app.status }}</div>
+              </div>
+              <div class="dRow">
+                <div class="k">Data Capture Languages</div>
+                <div class="v">{{ app.languages }}</div>
+              </div>
+            </div>
+
+            <div class="detailsActions">
+              <button mat-raised-button type="button" class="govPrimary" (click)="modifyInformation(app)">
+                <mat-icon class="btnIcon">edit</mat-icon>
+                MODIFY INFORMATION
+              </button>
+
+              <button mat-stroked-button type="button" class="govOutline" (click)="viewAcknowledgement(app)">
+                <mat-icon class="btnIcon">visibility</mat-icon>
+                VIEW ACKNOWLEDGEMENT
+              </button>
+
+              <!-- ✅ NEW: quick delete in details (optional but useful) -->
+              <button mat-stroked-button type="button" class="govDanger" (click)="deleteApplication(app)">
+                <mat-icon class="btnIcon">delete</mat-icon>
+                DELETE
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- ✅ NEW: details empty state -->
+        <div class="govDetailsEmpty" *ngIf="!hasSelectedApp">
+          <div class="govDetailsEmptyIcon"><mat-icon>touch_app</mat-icon></div>
+          <div class="govDetailsEmptyTitle">Select an application</div>
+          <div class="govDetailsEmptyHint">Choose one from the left list to view or modify details.</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- ===== DEFAULT / MODERN ===== -->
+  <ng-template #defaultOrModern>
+
+    <!-- MODERN: background + centered big card -->
+    <ng-container *ngIf="theme === 'modern'; else defaultThemeBody">
+      <div class="modernBg">
+
+        <div class="modernCard">
+
+          <div class="modernBody">
+            <!-- Left list -->
+            <div class="modernList">
+              <div class="modernListHeader">Applications</div>
+
+              <div class="modernRow" *ngFor="let app of apps" [class.selected]="app.selected"
+                (click)="toggleSelect(app, true)">
+                <mat-checkbox class="modernCheck" [(ngModel)]="app.selected" (click)="$event.stopPropagation()"
+                  (ngModelChange)="toggleSelect(app, $event)"></mat-checkbox>
+
+                <div class="modernRowMain">
+                  <div class="modernRowId">
+                    <span class="lbl">Application ID</span>
+                    <span class="val">{{ app.id }}</span>
+                  </div>
+
+                  <div class="modernRowMeta">
+                    <span>Name: <b>{{ app.name }}</b></span>
+                    <span class="dot">•</span>
+                    <span>Status: <b class="status">{{ app.status }}</b></span>
+                    <span class="dot">•</span>
+                    <span>Lang: <b>{{ app.languages }}</b></span>
+                  </div>
+                </div>
+
+                <button mat-icon-button type="button" class="modernDelete" title="Delete"
+                  (click)="$event.stopPropagation(); deleteApplication(app)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right details -->
+            <div class="modernDetails">
+              <div class="modernDetailsHeader">
+                <div class="h1">Application Details</div>
+                <div class="h2">Select an application to continue</div>
+              </div>
+
+              <ng-container *ngFor="let app of apps">
+                <div class="modernDetailsCard" *ngIf="app.selected">
+                  <div class="grid">
+                    <div class="dRow">
+                      <div class="k">Application ID</div>
+                      <div class="v">{{ app.id }}</div>
+                    </div>
+                    <div class="dRow">
+                      <div class="k">Name</div>
+                      <div class="v">{{ app.name }}</div>
+                    </div>
+                    <div class="dRow">
+                      <div class="k">Appointment Date</div>
+                      <div class="v">{{ app.appointmentDate }}</div>
+                    </div>
+                    <div class="dRow">
+                      <div class="k">Status</div>
+                      <div class="v status">{{ app.status }}</div>
+                    </div>
+                    <div class="dRow">
+                      <div class="k">Data Capture Languages</div>
+                      <div class="v">{{ app.languages }}</div>
+                    </div>
+                  </div>
+
+                  <div class="modernDetailsActions">
+                    <button mat-raised-button type="button" class="btnPink" (click)="modifyInformation(app)">
+                      Modify Information
+                    </button>
+                    <button mat-raised-button type="button" class="btnPink" (click)="viewAcknowledgement(app)">
+                      View Acknowledgement
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- DEFAULT (keep your existing default theme layout) -->
+    <ng-template #defaultThemeBody>
+      <div class="dashBodyDefault">
+        <div class="defaultGrid">
+          <div class="appCard" *ngFor="let app of apps">
+            <div class="appTop" [class.selected]="app.selected">
+              <mat-checkbox [(ngModel)]="app.selected" (ngModelChange)="toggleSelect(app, $event)"
+                class="appCheckbox"></mat-checkbox>
+
+              <div class="appTopText">
+                <span class="label">Application ID</span>
+                <span class="value">{{ app.id }}</span>
+              </div>
+
+              <button mat-icon-button type="button" class="deleteBtn" (click)="deleteApplication(app)" title="Delete">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+
+            <div class="appDetails">
+              <div class="row">
+                <div class="k">Name</div>
+                <div class="v">{{ app.name }}</div>
+              </div>
+
+              <div class="row">
+                <div class="k">Appointment Date</div>
+                <div class="v">{{ app.appointmentDate }}</div>
+              </div>
+
+              <div class="row">
+                <div class="k">Status</div>
+                <div class="v status">{{ app.status }}</div>
+              </div>
+
+              <div class="row">
+                <div class="k">Data Capture Languages</div>
+                <div class="v">{{ app.languages }}</div>
+              </div>
+            </div>
+
+            <div class="appFooter">
+              <button type="button" class="linkBtn" (click)="modifyInformation(app)">
+                <mat-icon class="miniIcon">edit</mat-icon>
+                Modify Information
+              </button>
+
+              <button type="button" class="linkBtn muted" (click)="viewAcknowledgement(app)">
+                <mat-icon class="miniIcon">visibility</mat-icon>
+                View Acknowledgement
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+  </ng-template>
+
+</div>

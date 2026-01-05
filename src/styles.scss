@@ -1,1 +1,177 @@
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme((
+    color: (
+      primary: mat.$rose-palette,
+      tertiary: mat.$red-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
 /* You can add global styles to this file, and also import other style files */
+
+.required {
+  color: red;
+}
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: var(--mat-dialog-container-max-width, 1200px) !important;
+}
+
+/* Angular Material MDC dialog (v15+) */
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 0 !important;
+}
+
+
+/* ====== Grid/labels (same as your gov design) ====== */
+.govGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.govLabel { display:block; font-size: 12px; font-weight: 900; margin-bottom: 6px; }
+.govDobRow { display: grid; grid-template-columns: 1.2fr auto 0.6fr 0.6fr; gap: 10px; align-items: center; }
+.govOr { font-weight: 900; color: #526174; text-align: center; }
+
+/* ====== GOV LOOK FOR ANGULAR MATERIAL (works in v15+ MDC) ====== */
+
+/* kill default fill background */
+.govMatField .mat-mdc-text-field-wrapper {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* remove outline + line ripple completely */
+.govMatField .mdc-notched-outline { display: none !important; }
+.govMatField .mdc-line-ripple { display: none !important; }
+
+/* remove the internal padding that makes it look "Material" */
+.govMatField .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  min-height: auto !important;
+}
+
+/* remove label area (since you already use <label>) */
+.govMatField .mat-mdc-floating-label { display: none !important; }
+
+/* IMPORTANT: remove subscript spacing under the field */
+.govMatField .mat-mdc-form-field-subscript-wrapper { display: none !important; }
+
+/* Apply your login input look to the actual control surfaces */
+.govMatField input.mat-mdc-input-element,
+.govMatField .mat-mdc-select-trigger {
+  width: 100% !important;
+  height: 45px !important;              /* like your screenshot */
+  padding: 0 18px !important;           /* like your screenshot */
+  border-radius: 14px !important;
+  border: 1px solid rgba(0,38,116,0.25) !important; /* thin grey border */
+  background: #fff !important;
+  box-sizing: border-box !important;
+  font-size: 16px !important;
+}
+
+/* placeholder */
+.govMatField input.mat-mdc-input-element::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* select arrow alignment */
+.govMatField .mat-mdc-select-arrow { margin-right: 6px; }
+
+/* ====== ALSO SUPPORT older non-MDC Material (v14 and below) ====== */
+.govMatField .mat-form-field-wrapper { padding: 0 !important; }
+.govMatField .mat-form-field-outline { display: none !important; }
+.govMatField .mat-form-field-infix { padding: 0 !important; border-top: 0 !important; }
+.govMatField .mat-form-field-subscript-wrapper { display: none !important; }
+
+/* INPUT focus */
+.govMatField.mat-focused input.mat-mdc-input-element {
+  border-color: #002674 !important;
+}
+
+/* SELECT focus */
+.govMatField.mat-focused .mat-mdc-select-trigger {
+  border-color: #002674 !important;
+}
+
+
+
+
+/* ===== FieldWrap label (like screenshot) ===== */
+.fieldWrap .label{
+  display: block;
+  font-weight: 700;
+  margin: 0 0 6px;
+  color: #111;
+}
+
+/* ===== Line style mat-form-field ===== */
+.lineField .mat-mdc-text-field-wrapper{
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* remove outline completely */
+.lineField .mdc-notched-outline{
+  display: none !important;
+}
+
+/* remove extra infix padding */
+.lineField .mat-mdc-form-field-infix{
+  padding: 0 !important;
+  min-height: auto !important;
+}
+
+/* hide subscript spacing */
+.lineField .mat-mdc-form-field-subscript-wrapper{
+  display: none !important;
+}
+
+/* make the control look like underline style */
+.lineField input.mat-mdc-input-element,
+.lineField .mat-mdc-select-trigger{
+  height: 44px !important;
+  padding: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(0,0,0,0.35) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* focus underline = RED (your screenshot) */
+.lineField.mat-focused input.mat-mdc-input-element,
+.lineField.mat-focused .mat-mdc-select-trigger{
+  border-bottom: 2px solid #ef4444 !important;
+}
+
+/* placeholder color */
+.lineField input::placeholder{
+  color: #94a3b8 !important;
+}

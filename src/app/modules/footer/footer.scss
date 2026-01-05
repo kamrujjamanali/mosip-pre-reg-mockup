@@ -1,0 +1,150 @@
+/* src/app/shared/footer/footer.component.scss */
+
+.appFooter {
+    width: 100%;
+    font-size: 12px;
+  }
+  
+  /* =========================
+     DEFAULT MOSIP FOOTER
+     ========================= */
+  .appFooter[data-theme='default'] {
+    background: #f2f2f2;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    color: #333;
+  }
+  
+  .appFooter[data-theme='default'] .footerInner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .appFooter[data-theme='default'] a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .appFooter[data-theme='default'] a:hover {
+    text-decoration: underline;
+  }
+  
+  /* =========================
+     GOVT FOOTER (SVG STYLE)
+     ========================= */
+  .appFooter[data-theme='svg_gov'] {
+    background: linear-gradient(
+      90deg,
+      #002674 0%,
+      #0a3aa6 50%,
+      #002674 100%
+    );
+    color: #fff;
+    position: relative;
+  }
+  
+  .appFooter[data-theme='svg_gov']::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      #002674 0%,
+      #fcd022 45%,
+      #007c2e 100%
+    );
+  }
+  
+  .appFooter[data-theme='svg_gov'] .footerInner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .appFooter[data-theme='svg_gov'] a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .appFooter[data-theme='svg_gov'] a:hover {
+    text-decoration: underline;
+  }
+  
+  /* =========================
+     MODERN FOOTER
+     ========================= */
+  .appFooter[data-theme='modern'] {
+    background: #c0392b;
+    color: #d1d5db;
+    backdrop-filter: blur(8px);
+  }
+  
+  .footerModern {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .modernTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modernTop .brand {
+    font-size: 14px;
+    font-weight: 1000;
+    letter-spacing: 1px;
+    color: #ffffff;
+  }
+  
+  .modernTop .links {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .modernTop a {
+    color: white;
+    // font-weight: 600;
+    text-decoration: none;
+  }
+  .modernTop a:hover {
+    color: #ffffff;
+  }
+  
+  .modernBottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    // padding-top: 10px;
+    font-size: 11px;
+    text-align: center;
+    color: white;
+  }
+  
+  /* =========================
+     COMMON
+     ========================= */
+  .sep {
+    margin: 0 8px;
+  }
+  
+  @media (max-width: 700px) {
+    .footerInner,
+    .modernTop {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+  

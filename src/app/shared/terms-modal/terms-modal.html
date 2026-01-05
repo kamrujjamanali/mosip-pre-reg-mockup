@@ -1,0 +1,42 @@
+<div class="tncRoot" [attr.data-theme]="theme">
+
+  <!-- Top heading (like screenshot) -->
+  <div class="tncTopTitle">{{ titleTop }}</div>
+  <div class="tncTopLine"></div>
+
+  <!-- Card with expansion panel -->
+  <div class="tncCard">
+    <mat-expansion-panel [expanded]="expanded" class="tncPanel" hideToggle="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="tncPanelTitle">{{ panelTitle }}</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="tncBody">
+        <div class="tncSectionTitle">{{ agreementTitle }}</div>
+
+        <div class="tncText">
+          I understand that MOSIP collects the below data during pre-registration, including my:
+        </div>
+
+        <ul class="tncList">
+          <li *ngFor="let b of bullets">{{ b }}</li>
+        </ul>
+
+        <div class="tncText">{{ paragraph }}</div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <!-- Checkbox -->
+  <div class="tncCheckRow">
+    <mat-checkbox [(ngModel)]="accepted"></mat-checkbox>
+    <span class="tncCheckText">Click to accept the terms and conditions</span>
+  </div>
+
+  <!-- Actions -->
+  <div class="tncActions">
+    <button mat-raised-button class="btnAccept" style="margin-right: 10px;" [disabled]="!accepted" (click)="accept()">Accept</button>
+    <button mat-stroked-button class="btnCancel" (click)="cancel()">Cancel</button>
+  </div>
+
+</div>

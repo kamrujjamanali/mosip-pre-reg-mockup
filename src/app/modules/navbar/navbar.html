@@ -1,0 +1,56 @@
+<!-- src/app/shared/navbar/navbar.component.html -->
+ <ng-container *ngIf="theme != 'default'">
+   <app-official-banner></app-official-banner>
+ </ng-container>
+<nav class="navBar" [attr.data-theme]="theme" [style.height]="theme == 'default' ? '72px' : '40px'">
+  <div class="navInner" [style.height]="theme == 'default' ? '72px' : '40px'">
+
+    <!-- Left: Logo -->
+    <div class="navLeft" (click)="go('/')">
+      <!-- Replace with your real logo asset -->
+      <img *ngIf="theme == 'default'" src="assets/Coat_of_arms_of_Saint_Vincent_and_the_Grenadines.svg" alt="MOSIP logo"
+        class="header--logo" style="height: 50px"/>
+      <!-- <div class="mosipLogo" aria-label="MOSIP"></div> -->
+    </div>
+
+    <!-- Middle: Menu -->
+    <div class="navMenu">
+      <a
+        class="navLink"
+        *ngFor="let item of menu"
+        (click)="go(item.path)"
+      >
+        {{ item.label }}
+      </a>
+
+      <div *ngIf="theme == 'default'" class="themeFloating">
+        <select [ngModel]="theme" (ngModelChange)="changeTheme($event)">
+          <option *ngFor="let t of themes" [value]="t.name">{{ t.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Right: actions -->
+    <div class="navRight">
+      
+      <ng-container *ngIf="isLoggedIn; else loggedOut">
+        <button mat-button class="navAction" type="button" (click)="goApplications()">
+          <mat-icon class="navIcon">folder_open</mat-icon>
+          <span>Your Applications</span>
+        </button>
+
+        <button mat-button class="navAction" type="button" (click)="logout()">
+          <mat-icon class="navIcon">power_settings_new</mat-icon>
+          <span>Logout</span>
+        </button>
+      </ng-container>
+
+      <ng-template #loggedOut>
+        <button mat-button class="navLogin" type="button" (click)="login()">
+          LOGIN
+        </button>
+      </ng-template>
+    </div>
+
+  </div>
+</nav>

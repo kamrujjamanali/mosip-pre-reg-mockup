@@ -1,0 +1,40 @@
+<!-- src/app/shared/footer/footer.component.html -->
+<footer class="appFooter" [attr.data-theme]="theme">
+
+    <!-- DEFAULT & GOVT -->
+    <ng-container *ngIf="theme !== 'modern'; else modernFooter">
+      <div class="footerInner">
+        <div class="footerLeft">
+          © {{ year }} GoSVG. All rights reserved.
+        </div>
+  
+        <div class="footerRight">
+          <a href="#">Privacy Policy</a>
+          <span class="sep">|</span>
+          <a href="#">Terms & Conditions</a>
+          <span class="sep">|</span>
+          <a href="#">Help</a>
+        </div>
+      </div>
+    </ng-container>
+  
+    <!-- MODERN -->
+    <ng-template #modernFooter>
+      <div class="footerModern">
+        <div class="modernTop">
+          <div class="brand">GoSVG</div>
+          <div class="links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Support</a>
+          </div>
+        </div>
+  
+        <div class="modernBottom">
+          © {{ year }} GoSVG Platform
+        </div>
+      </div>
+    </ng-template>
+  
+  </footer>
+  

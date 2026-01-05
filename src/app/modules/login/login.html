@@ -1,0 +1,255 @@
+<!-- src/app/login/login-mock.component.html -->
+<div class="page" [dir]="dir">
+
+  <!-- DEMO THEME SWITCH (BehaviorSubject) -->
+  <!-- <div class="themeFloating">
+    <select [ngModel]="theme" (ngModelChange)="changeTheme($event)">
+      <option *ngFor="let t of themes" [value]="t.name">{{ t.label }}</option>
+    </select>
+  </div> -->
+
+  <!-- ========================= DEFAULT (MOSIP) ========================= -->
+  <ng-container *ngIf="theme === 'default'">
+    <div class="mosipContent">
+      <div class="h1">Quick &amp; Easy steps</div>
+      <div class="h2">
+        <span class="h2Accent">Pre-register for </span>
+        <span class="h2Accent"><b>Unique Identification Number</b></span>
+      </div>
+
+      <!-- language underline select -->
+      <div class="fieldWrap">
+        <!-- <label class="label">Language</label> -->
+        <mat-form-field class="w-100 lineField" appearance="fill">
+          <mat-select [(ngModel)]="selectedLanguage">
+            <mat-option  *ngFor="let lang of languageCodeValue" [value]="lang.code">{{ lang.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- contact -->
+      <ng-container *ngIf="stage === 'contact'">
+        <div class="fieldWrap">
+          <!-- <label class="label">Email ID or Phone Number</label> -->
+          <mat-form-field class="w-100 lineField" appearance="fill">
+            <input matInput placeholder="Email ID or Phone Number" [(ngModel)]="contact" />
+            <button mat-icon-button matSuffix type="button"></button>
+          </mat-form-field>
+        </div>
+
+        <div class="captchaCard">
+          <div class="capLeft">
+            <input type="checkbox" [checked]="captchaChecked" (change)="toggleCaptcha($any($event.target).checked)" />
+            <span>I’m not a robot</span>
+          </div>
+          <div class="capRight">
+            <div class="capLogo"></div>
+            <div class="capText">
+              <div class="capTitle">reCAPTCHA</div>
+              <div class="capMeta">Privacy - Terms</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn"
+                [class.enabled]="canSendOtpDefaultGovt"
+                [disabled]="!canSendOtpDefaultGovt"
+                (click)="sendOtp()">
+          SEND OTP
+        </button>
+      </ng-container>
+
+      <!-- otp -->
+      <ng-container *ngIf="stage === 'otp'">
+        <div class="fieldWrap">
+          <!-- <label class="label">OTP</label> -->
+          <mat-form-field class="w-100 lineField" appearance="fill">
+            <input matInput [(ngModel)]="otp" placeholder="OTP"/>
+            <button mat-icon-button matSuffix type="button"></button>
+          </mat-form-field>
+        </div>
+
+        <div class="validFor">Valid for {{ minutes }}:{{ seconds }}</div>
+
+        <button class="btn"
+                [class.enabled]="canVerify"
+                [disabled]="!canVerify"
+                (click)="verifyOtp()">
+          VERIFY
+        </button>
+
+        <button class="back" type="button" (click)="backToContact()">Back</button>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <!-- ========================= GOVT PORTAL ========================= -->
+<!-- ========================= GOVT PORTAL (REPLACEMENT) ========================= -->
+<ng-container *ngIf="theme === 'svg_gov'">
+  <div class="govBg" >
+    <!-- [style.backgroundImage]="'url(' + backgroundImage + ')'" -->
+    <!-- <div class="govTopBar">
+      <div class="govBarInner">
+        <div class="govCrest"></div>
+        <div class="govBarText">
+          <div class="govBarTitle">Government of St. Vincent &amp; the Grenadines</div>
+          <div class="govBarSub">Unique Identification Number • Pre-Registration Portal</div>
+        </div>
+      </div>
+      <div class="govFlagBand">
+        <span class="b1"></span><span class="b2"></span><span class="b3"></span>
+      </div>
+    </div> -->
+
+    <div class="govCenter">
+      <div class="govPortalCard">
+        <div class="govCardHeader">
+          <div class="govCardTitle">Quick &amp; Easy steps</div>
+          <div class="govCardHint">Pre-register for Unique Identification Number</div>
+        </div>
+
+        <div class="govForm">
+          <div class="govRow">
+            <label class="govLabel">Language</label>
+            <select class="govSelect" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
+              <option *ngFor="let lang of languageCodeValue" [value]="lang.code">{{ lang.value }}</option>
+            </select>
+          </div>
+
+          <ng-container *ngIf="stage === 'contact'">
+            <div class="govRow">
+              <label class="govLabel">Email / Mobile</label>
+              <input class="govInput" style="width: 95%;" [(ngModel)]="contact" placeholder="Enter Email ID or Phone Number" />
+            </div>
+
+            <div class="govVerifyRow">
+              <label class="govCheck">
+                <input type="checkbox" [checked]="captchaChecked"
+                       (change)="toggleCaptcha($any($event.target).checked)" />
+                <span>I’m not a robot</span>
+              </label>
+              <div class="govTrustPill">reCAPTCHA</div>
+            </div>
+
+            <button class="govPrimaryBtn"
+                    [class.enabled]="canSendOtpDefaultGovt"
+                    [disabled]="!canSendOtpDefaultGovt"
+                    (click)="sendOtp()">
+              Send OTP
+            </button>
+
+            <div class="govFooterNote">
+              Your OTP will be sent to your registered contact.
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="stage === 'otp'">
+            <div class="govRow">
+              <label class="govLabel">OTP</label>
+              <input class="govInput" style="width: 95%;" [(ngModel)]="otp" placeholder="Enter OTP" />
+            </div>
+
+            <div class="govTimer">Valid for <b>{{ minutes }}:{{ seconds }}</b></div>
+
+            <button class="govPrimaryBtn"
+                    [class.enabled]="canVerify"
+                    [disabled]="!canVerify"
+                    (click)="verifyOtp()">
+              Verify &amp; Continue
+            </button>
+
+            <button class="govLinkBtn" type="button" (click)="backToContact()">Back</button>
+          </ng-container>
+        </div>
+
+        <!-- watermark diamonds (like the SVG flag diamonds) -->
+        <div class="govWatermark">
+          <span class="d"></span><span class="d"></span><span class="d"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+<!-- ========================= MODERN (PHOTO BG + CENTER CARD) ========================= -->
+<ng-container *ngIf="theme === 'modern'">
+  <div class="modernPhotoBg">
+    <div class="modernCard">
+
+      <div class="modernCardHead">
+        <div class="modernHeadTitle">Quick &amp; Easy steps</div>
+        <div class="modernHeadLine">Pre-register for Unique Identification Number</div>
+      </div>
+
+      <div class="modernBody">
+
+        <div class="modernLabel">
+          Language
+        </div>
+        <mat-form-field appearance="outline" class="fullWidth">
+          <!-- <mat-label>Language</mat-label> -->
+          <mat-select [(ngModel)]="selectedLanguage" (selectionChange)="changeLanguage()">
+            <mat-option *ngFor="let lang of languageCodeValue" [value]="lang.code">
+              {{ lang.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- CONTACT -->
+        <ng-container *ngIf="stage === 'contact'">
+          <div class="modernLabel">
+            Registered Email ID / Mobile <span class="req">*</span>
+          </div>
+          <mat-form-field appearance="outline" class="fullWidth">
+            <input matInput [(ngModel)]="contact" placeholder="Enter Email ID / Phone Number" autocomplete="off" />
+          </mat-form-field>
+
+          <!-- “I'm not a robot” like screenshot area -->
+          <div class="modernRobotRow">
+            <label class="modernRobotCheck">
+              <input type="checkbox"
+                     [checked]="captchaChecked"
+                     (change)="toggleCaptcha($any($event.target).checked)" />
+              <span>I’m not a robot</span>
+            </label>
+            <div class="modernRobotBadge">reCAPTCHA</div>
+          </div>
+
+          <button class="modernPrimaryBtn"
+                  [class.enabled]="canSendOtpModern"
+                  [disabled]="!canSendOtpModern"
+                  (click)="sendOtp()">
+            Send OTP
+          </button>
+        </ng-container>
+
+        <!-- OTP -->
+        <ng-container *ngIf="stage === 'otp'">
+          <div class="modernLabel">
+            Enter OTP <span class="req">*</span>
+          </div>
+          <mat-form-field appearance="outline" class="fullWidth">
+            <input matInput [(ngModel)]="otp" placeholder="Enter OTP" autocomplete="off" />
+          </mat-form-field>
+
+          <div class="modernTimer">Valid for <b>{{ minutes }}:{{ seconds }}</b></div>
+
+          <button class="modernPrimaryBtn"
+                  [class.enabled]="canVerify"
+                  [disabled]="!canVerify"
+                  (click)="verifyOtp()">
+            Verify
+          </button>
+
+          <button class="modernBackBtn" type="button" (click)="backToContact()">Back</button>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+
+
+</div>

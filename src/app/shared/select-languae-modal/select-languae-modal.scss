@@ -1,0 +1,127 @@
+/* Base dialog container */
+.dlg {
+    background: var(--modal-bg);
+    padding: 22px 26px 18px;
+    border-radius: 4px;
+    border: 1px solid var(--modal-border);
+    box-shadow: var(--modal-shadow);
+    color: var(--text);
+  }
+  
+  /* title like screenshot */
+  .dlgTitle {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--modal-title);
+    letter-spacing: 0.3px;
+  }
+  
+  .dlgLine {
+    height: 2px;
+    margin-top: 8px;
+    background: var(--modal-accent);
+    opacity: 0.85;
+  }
+  
+  .dlgText {
+    margin-top: 16px;
+    line-height: 1.45;
+    color: var(--text);
+    font-size: 14px;
+  }
+  
+  .list {
+    margin-top: 18px;
+  }
+  
+  .row {
+    margin: 0px 0;
+  }
+  
+  .error {
+    margin-top: 10px;
+    color: #b91c1c;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  
+  /* actions like screenshot */
+  .actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .btnCancel {
+    border: 1px solid var(--modal-btn-outline) !important;
+    color: var(--modal-btn-outline) !important;
+    border-radius: 2px !important;
+    height: 40px;
+    padding: 0 22px;
+  }
+  
+  .btnSubmit {
+    background: var(--modal-accent) !important;
+    color: #fff !important;
+    border-radius: 2px !important;
+    height: 40px;
+    padding: 0 24px;
+  }
+  
+  /* =========================
+     Theme-specific layout changes
+     ========================= */
+  
+  /* DEFAULT (MOSIP) = flat, sharp corners, very close to screenshot */
+  :host ::ng-deep .app-language-dialog .mat-mdc-dialog-container {
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+  
+  /* GOVT = more formal header band + slightly bigger radius */
+  .dlg[data-theme='svg_gov'] {
+    border-radius: 12px;
+    padding-top: 0;
+    overflow: hidden;
+  }
+  
+  .dlg[data-theme='svg_gov'] .dlgTitle {
+    padding: 16px 20px 8px;
+  }
+  
+  .dlg[data-theme='svg_gov'] .dlgLine {
+    margin: 0 20px;
+  }
+  
+  .dlg[data-theme='svg_gov'] .dlgText,
+  .dlg[data-theme='svg_gov'] .list,
+  .dlg[data-theme='svg_gov'] .actions {
+    padding: 0 20px;
+  }
+  
+  /* add govt band */
+  .dlg[data-theme='svg_gov']::before {
+    content: '';
+    display: block;
+    height: 10px;
+    // background: linear-gradient(90deg, var(--gov-blue), var(--gov-yellow), var(--gov-green));
+  }
+  
+  /* MODERN = glassy card feel */
+  .dlg[data-theme='modern'] {
+    border-radius: 14px;
+    padding: 24px 26px 20px;
+    backdrop-filter: blur(6px);
+  }
+  
+  .dlg[data-theme='modern'] .dlgTitle {
+    font-size: 22px;
+  }
+  
+  .dlg[data-theme='modern'] .dlgLine {
+    height: 3px;
+    border-radius: 999px;
+  }
+  

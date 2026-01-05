@@ -1,12 +1,28 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ThemeService } from './core/services/theme.service';
+import { LoginComponent } from "./modules/login/login";
+import { NavbarComponent } from './modules/navbar/navbar';
+import { Footer } from './modules/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  imports: [NavbarComponent, Footer, RouterOutlet],
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('mosip-pre-reg-mockup');
+  theme$: any;
+  isLoggedIn = false;
+  constructor(private themeService: ThemeService) {
+    // this.theme$ = this.themeService.theme$;
+  }
+
+  ngOnInit(): void {
+    this.themeService.loggedIn$.subscribe((t) => {
+      this.isLoggedIn = t;
+      console.log('App loggedIn:', this.isLoggedIn);
+    });
+  }
 }

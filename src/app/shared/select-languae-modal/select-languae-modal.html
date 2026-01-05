@@ -1,0 +1,30 @@
+<div class="dlg" [attr.data-theme]="theme">
+
+    <div class="dlgTitle">SELECT LANGUAGE</div>
+    <div class="dlgLine"></div>
+  
+    <div class="dlgText">
+      You can select minimum 1 and maximum 2 languages for data entry.
+      English is mandatory for the resident to select as per government guidelines.
+      The order of selection will lead to page view for demographic data.
+    </div>
+  
+    <div class="list">
+      <div class="row" *ngFor="let lang of languages">
+        <mat-checkbox
+          [checked]="isChecked(lang.code)"
+          [disabled]="isDisabled(lang)"
+          (change)="toggle(lang, $event.checked)">
+          {{ lang.label }}
+        </mat-checkbox>
+      </div>
+  
+      <div class="error" *ngIf="error">{{ error }}</div>
+    </div>
+  
+    <div class="actions">
+      <button mat-stroked-button class="btnCancel" (click)="cancel()">CANCEL</button>
+      <button mat-raised-button class="btnSubmit" (click)="submit()">SUBMIT</button>
+    </div>
+  </div>
+  

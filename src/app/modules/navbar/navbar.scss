@@ -1,0 +1,143 @@
+/* src/app/shared/navbar/navbar.component.scss */
+.navBar {
+  height: 72px;
+  width: 100%;
+  background: var(--nav-bg);
+  color: var(--nav-text);
+}
+
+.navInner {
+  height: 72px;
+  display: grid;
+  grid-template-columns: 30px 1fr 340px;
+  align-items: center;
+  padding: 0 18px;
+  gap: 10px;
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Replace with your real MOSIP logo */
+.mosipLogo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0) 45%),
+    conic-gradient(#f44336, #ff9800, #ffeb3b, #4caf50, #00bcd4, #3f51b5, #9c27b0, #f44336);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.10);
+}
+
+/* Center menu like screenshot */
+.navMenu {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+
+.navLink {
+  color: var(--nav-text);
+  // font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.95;
+}
+.navLink:hover {
+  opacity: 1;
+  // text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* Right side */
+.navRight {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+}
+
+.navAction {
+  color: var(--nav-text) !important;
+  // font-weight: 700;
+  text-transform: none;
+}
+.navIcon {
+  margin-right: 10px;
+  color: var(--nav-text);
+}
+
+.navLogin {
+  color: var(--nav-text) !important;
+  // font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* =========================
+   THEME VARIANTS
+   ========================= */
+
+/* 1) Default MOSIP (matches screenshot teal) */
+.navBar[data-theme='default'] {
+  --nav-bg: #0f6d80;
+  --nav-text: #ffffff;
+}
+
+/* 2) Govt theme (SVG look: deeper blue + flag accent line) */
+.navBar[data-theme='svg_gov'] {
+  --nav-bg: #165889;
+  --nav-text: #ffffff;
+  position: relative;
+}
+.navBar[data-theme='svg_gov']::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  // background: linear-gradient(90deg, #002674 0%, #FCD022 45%, #007C2E 100%);
+}
+
+/* 3) Modern theme (clean dark + subtle border) */
+.navBar[data-theme='modern'] {
+  --nav-bg: #c0392b;
+  --nav-text: #ffffff;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  backdrop-filter: blur(10px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .navInner {
+    grid-template-columns: 70px 1fr 180px;
+  }
+  .navMenu {
+    gap: 16px;
+    padding-left: 10px;
+  }
+  .navAction span {
+    display: none;
+  }
+}
+
+
+/* Demo theme dropdown */
+.themeFloating {
+  // position: fixed;
+  top: 14px;
+  right: 14px;
+  // z-index: 1000;
+}
+.themeFloating select {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+}

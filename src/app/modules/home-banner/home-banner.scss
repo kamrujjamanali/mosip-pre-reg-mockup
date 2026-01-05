@@ -1,0 +1,57 @@
+/* Hero Section */
+.home-hero {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  /* Banner Container */
+  .banner-container {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Welcome Text */
+  .welcome-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-name {
+    font-weight: bold;
+    font-size: 28px;
+  }
+  
+  .user-role {
+    font-size: 16px;
+    font-weight: normal;
+    opacity: 0.9;
+  }
+  
+  /* Last Login */
+  .last-login {
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    margin-top: -60px;
+  }
+  
+  mat-icon {
+    color: white;
+  }
+  

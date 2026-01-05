@@ -1,0 +1,182 @@
+.confirmRoot {
+    background: var(--tnc-bg);
+    padding: 18px 22px 16px;
+    border-radius: 4px;
+    box-shadow: var(--tnc-shadow);
+    border: 1px solid var(--tnc-border);
+    color: #111;
+  }
+  
+  /* Top heading */
+  .confirmTopTitle {
+    font-weight: 900;
+    color: var(--tnc-accent);
+    letter-spacing: .3px;
+    font-size: 16px;
+  }
+  
+  .confirmTopLine {
+    height: 2px;
+    margin-top: 8px;
+    background: var(--tnc-accent);
+    opacity: .85;
+  }
+  
+  /* Card body */
+  .confirmCard {
+    margin-top: 16px;
+    border-radius: 4px;
+    border: 1px solid rgba(2,6,23,0.10);
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    padding: 14px 14px 12px;
+  }
+  
+  .confirmHead {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .confirmIcon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(0,0,0,0.06);
+  }
+  
+  .confirmIcon mat-icon {
+    font-size: 26px;
+    width: 26px;
+    height: 26px;
+  }
+  
+  .confirmHeading {
+    font-weight: 900;
+    font-size: 16px;
+    margin-top: 2px;
+  }
+  
+  .confirmMessage {
+    color: #111;
+    line-height: 1.45;
+    margin-top: 4px;
+  }
+  
+  .confirmDetails {
+    margin: 10px 0 0 18px;
+    padding: 0;
+  }
+  
+  .confirmDetails li {
+    margin: 4px 0;
+  }
+  
+  /* Actions */
+  .confirmActions {
+    margin-top: 12px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .btnCancel {
+    border: 1px solid var(--tnc-accent) !important;
+    color: var(--tnc-accent) !important;
+    border-radius: 2px !important;
+    height: 40px;
+    padding: 0 26px;
+  }
+  
+  .btnConfirm {
+    background: var(--tnc-accent) !important;
+    color: #fff !important;
+    border-radius: 2px !important;
+    height: 40px;
+    padding: 0 30px;
+  }
+  
+  /* ===== Type coloring (uses only accents; keeps your theme) ===== */
+  .confirm-success .confirmIcon { background: rgba(0, 124, 46, 0.10); }
+  .confirm-success .confirmIcon mat-icon { color: #007c2e; }
+  
+  .confirm-warning .confirmIcon { background: rgba(252, 208, 34, 0.18); }
+  .confirm-warning .confirmIcon mat-icon { color: #a16207; }
+  
+  .confirm-danger .confirmIcon { background: rgba(220, 38, 38, 0.12); }
+  .confirm-danger .confirmIcon mat-icon { color: #dc2626; }
+  
+  .confirm-info .confirmIcon { background: rgba(0, 38, 116, 0.10); }
+  .confirm-info .confirmIcon mat-icon { color: #002674; }
+  
+  /* ================= GOVT VERSION (same pattern as yours) ================= */
+  .confirmRoot[data-theme='svg_gov'] {
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .confirmRoot[data-theme='svg_gov'] .confirmTopTitle {
+    padding: 16px 22px 0;
+  }
+  
+//   .confirmRoot[data-theme='svg_gov'] .confirmTopLine {
+//     margin-left: 22px;
+//     margin-right: 22px;
+//   }
+  
+  .confirmRoot[data-theme='svg_gov'] .confirmCard,
+  .confirmRoot[data-theme='svg_gov'] .confirmActions {
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: 12px;
+  }
+  
+  .confirmRoot[data-theme='svg_gov'] .confirmCard {
+    border-radius: 12px;
+    background: #f4faff;
+  }
+  
+  .confirmRoot[data-theme='svg_gov'] .btnCancel,
+  .confirmRoot[data-theme='svg_gov'] .btnConfirm {
+    border: none;
+    background: #002674;
+    color: #fff;
+    font-weight: 900;
+    padding: 10px 14px;
+    border-radius: 12px !important;
+    cursor: pointer;
+    height: 44px;
+  }
+  
+  .confirmRoot[data-theme='svg_gov'] .btnCancel {
+    background: transparent;
+    border: 1px solid #002674 !important;
+    color: #002674 !important;
+  }
+  
+  /* ================= MODERN VERSION ================= */
+  .confirmRoot[data-theme='modern'] {
+    border-radius: 16px;
+    padding: 20px 22px 18px;
+    background: rgba(255,255,255,0.98);
+  }
+  
+  .confirmRoot[data-theme='modern'] .confirmTopTitle {
+    font-size: 18px;
+  }
+  
+  .confirmRoot[data-theme='modern'] .confirmTopLine {
+    height: 3px;
+    border-radius: 999px;
+  }
+  
+  .confirmRoot[data-theme='modern'] .btnCancel,
+  .confirmRoot[data-theme='modern'] .btnConfirm {
+    border-radius: 12px !important;
+    height: 44px;
+  }
+  

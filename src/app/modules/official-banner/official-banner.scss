@@ -1,0 +1,116 @@
+.govBanner {
+    width: 100%;
+    background: var(--bg);
+    border-bottom: 2px solid var(--line);
+  }
+  
+  .bannerInner {
+    // max-width: 1400px;
+    margin: 0 auto;
+    height: 85px;
+    display: grid;
+    grid-template-columns: 1fr 1px 2.5fr;
+    align-items: center;
+    gap: 18px;
+    padding: 0px 20px;
+  }
+  
+  /* LEFT */
+  .leftBlock {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .crest {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  .leftTitle {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1a3256;
+    line-height: 1.2;
+  }
+  .leftSub {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  
+  /* DIVIDER */
+  .divider {
+    width: 1px;
+    height: 64px;
+    background: var(--divider);
+  }
+  
+  /* RIGHT */
+  .rightTitle {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--text);
+  }
+  .rightSub {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  
+  /* =========================
+     OFFICIAL GOVT THEME
+     ========================= */
+  .govBanner[data-theme='svg_gov'] {
+    --bg: #ffffff;
+    --line: #006341;          /* SVG GREEN */
+    --divider: rgba(0, 0, 0, 0.18);
+    --primary: #006341;
+    --text: #1f2937;
+    --muted: #6b7280;
+  }
+  
+  /* =========================
+     MODERN GOVT THEME
+     ========================= */
+  .govBanner[data-theme='modern'] {
+    --bg: rgba(255, 255, 255, 0.94);
+    --line: #fcd022;          /* SVG YELLOW */
+    --divider: rgba(0, 0, 0, 0.12);
+    --primary: #111827;
+    --text: #111827;
+    --muted: #6b7280;
+  
+    backdrop-filter: blur(10px);
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .bannerInner {
+      grid-template-columns: 1fr;
+      height: auto;
+      gap: 10px;
+    }
+  
+    .divider {
+      display: none;
+    }
+  }
+  
+
+  .themeFloating {
+    position: absolute;
+    top: 25px;
+    right: 14px;
+    // z-index: 1000;
+  }
+  .themeFloating select {
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+  }

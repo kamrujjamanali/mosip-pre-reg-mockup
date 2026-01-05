@@ -1,0 +1,452 @@
+/* src/app/login/login-mock.component.scss */
+:host { font-family: Arial, Helvetica, sans-serif; }
+
+.page {
+  min-height: 85vh;
+  background: var(--bg);
+  color: var(--text);
+  position: relative;
+}
+
+/* Demo theme dropdown */
+.themeFloating {
+  // position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 1000;
+}
+.themeFloating select {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+/* ================= DEFAULT (MOSIP) ================= */
+.mosipContent {
+  width: 420px;
+  max-width: 86vw;
+  margin: 0 auto;
+  padding-top: 90px;
+  text-align: center;
+}
+
+.h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.h2 { font-size: 20px; margin-bottom: 46px; }
+.h2Normal { color: var(--text); font-weight: 400; }
+.h2Accent { color: var(--accent); }
+
+.fieldWrap {
+  width: 100%;
+  text-align: left;
+  margin: 0 auto 20px;
+}
+.label { display:block; font-size:14px; font-weight: 600;}
+
+.w-100 {
+  width: 100%;
+}
+
+.underlineInput, .underlineSelect {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 8px 0 8px;
+  background: transparent;
+  color: var(--text);
+}
+.underlineSelect {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #666 50%),
+    linear-gradient(135deg, #666 50%, transparent 50%);
+  background-position: calc(100% - 14px) 55%, calc(100% - 8px) 55%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+.underline { height: 1px; background: var(--underline); width: 100%; }
+.focusAccent { height: 2px; background: var(--accent); width: 100%; margin-top: -1px; opacity: .35; }
+.otpFocus { height: 2px; background: var(--accent); width: 100%; margin-top: -1px; }
+.otp { margin-top: 22px; }
+
+.captchaCard {
+  // width: 360px;
+  max-width: 86vw;
+  margin: 8px 0px 22px;
+  border: 1px solid #dcdcdc;
+  border-radius: 2px;
+  background: #fff;
+  padding: 16px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.capLeft { display:flex; align-items:center; gap:12px; font-size:14px; }
+.capRight { display:flex; align-items:center; gap:10px; opacity:.9; }
+.capLogo { width:28px; height:28px; border-radius:6px; background: var(--accent); }
+.capText { text-align:right; line-height:1.15; }
+.capTitle { font-size:12px; font-weight:700; color:#5f6368; }
+.capMeta { font-size:10px; color:#5f6368; }
+
+.btn {
+  width: 100%;
+  height: 58px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  background: var(--btn-disabled-bg);
+  color: var(--btn-disabled-text);
+  cursor: not-allowed;
+}
+.btn.enabled {
+  background: var(--btn-enabled-bg);
+  color: var(--btn-enabled-text);
+  cursor: pointer;
+}
+.validFor {
+  margin-top: 20px;
+  font-size: 18px;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 10px;
+}
+.back {
+  margin-top: 12px;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ================= GOVT PORTAL ================= */
+/* ================= GOVT (ENHANCED) ================= */
+.govBg {
+  min-height: 80vh;
+  // position: relative;
+  //   width: 100%;
+  //   height: 100px;
+  //   color: white;
+  //   padding: 10px;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   background-size: cover;
+  //   background-position: center;
+  background:
+    radial-gradient(900px 500px at 15% 10%, rgba(0, 38, 116, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 85% 20%, rgba(0, 124, 46, 0.16), transparent 60%),
+    radial-gradient(700px 380px at 50% 0%, rgba(252, 208, 34, 0.20), transparent 58%),
+    var(--bg);
+}
+
+.govTopBar {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.govBarInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.govCrest {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--gov-blue), var(--gov-yellow));
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.govBarTitle { font-weight: 900; }
+.govBarSub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+.govFlagBand {
+  height: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.govFlagBand .b1 { background: var(--gov-blue); }
+.govFlagBand .b2 { background: var(--gov-yellow); }
+.govFlagBand .b3 { background: var(--gov-green); }
+
+.govCenter {
+  display: flex;
+  justify-content: center;
+  padding: 34px 18px 48px;
+}
+
+.govPortalCard {
+  width: 520px;
+  max-width: 92vw;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 18px;
+  padding: 20px 20px 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.govCardHeader { margin-bottom: 14px; }
+.govCardTitle { font-size: 20px; font-weight: 900; text-align: center; }
+.govCardHint { color: var(--muted); margin-top: 6px; text-align: center; font-size: 15px; font-weight: 600; }
+
+.govForm { margin-top: 8px; }
+
+.govRow { margin: 12px 0; }
+.govLabel { display:block; font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+
+.govSelect, .govInput {
+  width: 100%;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid rgba(2,6,23,0.10);
+  padding: 0 12px;
+  outline: none;
+  background: #fff;
+}
+
+.govInput:focus, .govSelect:focus {
+  border-color: var(--gov-blue);
+  box-shadow: 0 0 0 4px rgba(0,38,116,0.10);
+}
+
+.govVerifyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px dashed rgba(2,6,23,0.18);
+  background: rgba(0,38,116,0.03);
+  margin-top: 10px;
+}
+
+.govCheck { display:flex; align-items:center; gap:10px; font-size: 14px; }
+
+.govTrustPill {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--gov-blue);
+  background: rgba(0,38,116,0.08);
+  padding: 8px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.govPrimaryBtn {
+  width: 100%;
+  height: 48px;
+  margin-top: 14px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 900;
+
+  background: var(--btn-disabled-bg);
+  color: var(--btn-disabled-text);
+  cursor: not-allowed;
+}
+
+.govPrimaryBtn.enabled {
+  background: var(--btn-enabled-bg);
+  color: var(--btn-enabled-text);
+  cursor: pointer;
+}
+
+.govTimer { margin-top: 10px; color: var(--muted); }
+
+.govLinkBtn {
+  margin-top: 10px;
+  border: none;
+  background: transparent;
+  color: var(--gov-blue);
+  font-weight: 900;
+  cursor: pointer;
+  width: 100%;
+}
+
+.govFooterNote {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* watermark diamonds */
+.govWatermark {
+  position: absolute;
+  right: -10px;
+  bottom: -14px;
+  display: flex;
+  gap: 10px;
+  opacity: 0.12;
+}
+.govWatermark .d {
+  width: 22px;
+  height: 22px;
+  background: var(--gov-green);
+  transform: rotate(45deg);
+  border-radius: 5px;
+}
+
+/* ================= MODERN (PHOTO BG + CENTER CARD) ================= */
+.modernPhotoBg {
+  // min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Photo background + dark overlay like screenshot */
+  background-image: var(--modern-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 78vh;
+  padding: 28px 18px;
+}
+
+.modernCard {
+  width: 35%;
+  max-width: 94vw;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.modernCardHead {
+  padding: 22px 26px 10px;
+  text-align: center;
+}
+
+.modernHeadTitle {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: -0.3px;
+}
+
+.modernHeadLine {
+  height: 2px;
+  width: 100%;
+  margin-top: 10px;
+  background: var(--accent);
+  color: var(--accent);
+  opacity: 0.8;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.modernBody {
+  padding: 18px 26px 26px;
+}
+
+.fullWidth { width: 100%; }
+
+.modernLabel {
+  font-weight: 700;
+  margin: 2px 0 8px;
+  color: var(--text);
+}
+
+.req { color: var(--accent); }
+
+/* Robot row */
+.modernRobotRow {
+  margin: 10px 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid rgba(2, 6, 23, 0.12);
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: #fff;
+}
+
+.modernRobotCheck {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.modernRobotBadge {
+  font-size: 12px;
+  font-weight: 900;
+  color: #5f6368;
+}
+
+/* Buttons */
+.modernPrimaryBtn {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 900;
+  font-size: 16px;
+
+  background: var(--btn-disabled-bg);
+  color: var(--btn-disabled-text);
+  cursor: not-allowed;
+}
+
+.modernPrimaryBtn.enabled {
+  background: var(--btn-enabled-bg);
+  color: var(--btn-enabled-text);
+  cursor: pointer;
+}
+
+/* links like screenshot */
+.modernLinksRow {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.modernLink {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.modernBottomLinks {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.modernLink2 {
+  color: #2563eb;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.modernRegister {
+  margin-top: 16px;
+  color: var(--text);
+}
+
+.modernTimer {
+  margin: 10px 0 6px;
+  color: var(--muted);
+}
+
+.modernBackBtn {
+  margin-top: 10px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 900;
+  cursor: pointer;
+}

@@ -1,0 +1,40 @@
+<div class="confirmRoot"
+     [attr.data-theme]="theme"
+     [ngClass]="typeClass">
+
+  <!-- Top title like your T&C modal -->
+  <div class="confirmTopTitle">{{ titleTop }}</div>
+  <div class="confirmTopLine"></div>
+
+  <div class="confirmCard">
+    <div class="confirmHead">
+      <div class="confirmIcon">
+        <mat-icon>{{ icon }}</mat-icon>
+      </div>
+
+      <div class="confirmHeadText">
+        <div class="confirmHeading">{{ heading }}</div>
+        <div class="confirmMessage">{{ message }}</div>
+      </div>
+    </div>
+
+    <ul class="confirmDetails" *ngIf="details.length">
+      <li *ngFor="let d of details">{{ d }}</li>
+    </ul>
+  </div>
+
+  <div class="confirmActions">
+    <button *ngIf="showCancel"
+            mat-stroked-button
+            class="btnCancel"
+            (click)="cancel()">
+      {{ cancelText }}
+    </button>
+
+    <button mat-raised-button
+            class="btnConfirm"
+            (click)="confirm()">
+      {{ confirmText }}
+    </button>
+  </div>
+</div>
