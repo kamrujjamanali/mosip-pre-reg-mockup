@@ -124,22 +124,22 @@
 /* ================= GOVT PORTAL ================= */
 /* ================= GOVT (ENHANCED) ================= */
 .govBg {
-  min-height: 80vh;
-  // position: relative;
-  //   width: 100%;
-  //   height: 100px;
-  //   color: white;
-  //   padding: 10px;
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   background-size: cover;
-  //   background-position: center;
-  background:
-    radial-gradient(900px 500px at 15% 10%, rgba(0, 38, 116, 0.18), transparent 60%),
-    radial-gradient(900px 500px at 85% 20%, rgba(0, 124, 46, 0.16), transparent 60%),
-    radial-gradient(700px 380px at 50% 0%, rgba(252, 208, 34, 0.20), transparent 58%),
-    var(--bg);
+  min-height: 83vh;
+  position: relative;
+    width: 100%;
+    height: 100px;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+  // background:
+  //   radial-gradient(900px 500px at 15% 10%, rgba(0, 38, 116, 0.18), transparent 60%),
+  //   radial-gradient(900px 500px at 85% 20%, rgba(0, 124, 46, 0.16), transparent 60%),
+  //   radial-gradient(700px 380px at 50% 0%, rgba(252, 208, 34, 0.20), transparent 58%),
+  //   var(--bg);
 }
 
 .govTopBar {
@@ -196,13 +196,13 @@
 }
 
 .govCardHeader { margin-bottom: 14px; }
-.govCardTitle { font-size: 20px; font-weight: 900; text-align: center; }
+.govCardTitle { font-size: 20px; font-weight: 900; text-align: center; color: black;}
 .govCardHint { color: var(--muted); margin-top: 6px; text-align: center; font-size: 15px; font-weight: 600; }
 
 .govForm { margin-top: 8px; }
 
 .govRow { margin: 12px 0; }
-.govLabel { display:block; font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.govLabel { display:block; font-size: 15px; font-weight: 600; margin-bottom: 6px; color: black;}
 
 .govSelect, .govInput {
   width: 100%;
@@ -231,7 +231,7 @@
   margin-top: 10px;
 }
 
-.govCheck { display:flex; align-items:center; gap:10px; font-size: 14px; }
+.govCheck { display:flex; align-items:center; gap:10px; font-size: 14px; color: black; }
 
 .govTrustPill {
   font-size: 12px;

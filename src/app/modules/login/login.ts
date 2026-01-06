@@ -1,5 +1,5 @@
 // src/app/login/login-mock.component.ts
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,6 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ThemeName, ThemeService } from '../../core/services/theme.service';
+import { ConfirmModal } from '../../shared/confirm-modal/confirm-modal';
+import { MatDialog } from '@angular/material/dialog';
 
 type Dir = 'ltr' | 'rtl';
 
@@ -35,6 +37,7 @@ type Dir = 'ltr' | 'rtl';
 export class LoginComponent implements OnInit, OnDestroy {
   private readonly themeService = inject(ThemeService);
   private readonly router = inject(Router);
+  private readonly dialog = inject(MatDialog);
 
   themes = this.themeService.themes;
   theme: ThemeName = this.themeService.getTheme();
@@ -70,6 +73,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   captchaInput = '';
   captchaDataUrl = '';
   backgroundImage: string = 'assets/login-back.jpg';
+
+  constructor(private cdn: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.applyLanguageDir(this.selectedLanguage);
@@ -152,12 +157,26 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     // hardcoded OTP success
     if (this.otp !== '1111') {
-      // alert('Invalid OTP (try 1111)');
-      this.otp = '';
-      return;
+      const ref = this.dialog.open(ConfirmModal, {
+        width: '560px',
+        data: {
+          title: 'Error',
+          heading: 'Wrong OTP',
+          message: 'Please enter the correct OTP sent to your contact number.',
+          type: 'error',
+          confirmText: 'Ok',
+          // cancelText: 'No',
+          showCancel: true
+        }
+      })
+      ref.afterClosed().subscribe(res => {
+        this.otp = '';
+        this.cdn.detectChanges();
+      });
+    } else {
+      this.themeService.loggedIn(true);
+      this.router.navigateByUrl('/demographic');
     }
-    this.themeService.loggedIn(true);
-    this.router.navigateByUrl('/demographic');
   }
 
   backToContact() {

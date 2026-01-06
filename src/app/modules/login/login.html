@@ -86,7 +86,7 @@
   <!-- ========================= GOVT PORTAL ========================= -->
 <!-- ========================= GOVT PORTAL (REPLACEMENT) ========================= -->
 <ng-container *ngIf="theme === 'svg_gov'">
-  <div class="govBg" >
+  <div class="govBg" [style.backgroundImage]="'url(' + backgroundImage + ')'">
     <!-- [style.backgroundImage]="'url(' + backgroundImage + ')'" -->
     <!-- <div class="govTopBar">
       <div class="govBarInner">

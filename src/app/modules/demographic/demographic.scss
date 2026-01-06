@@ -257,15 +257,15 @@
 
 .govStepper { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; width: 100%; justify-content: center; }
 .govStep {
-  border: 2px solid rgba(0,38,116,0.25);
+  border: 2px solid rgb(22 88 137);
   background: #fff;
   border-radius: 999px;
   padding: 8px 14px;
   font-weight: 900;
   cursor: pointer;
 }
-.govStep.active { background: rgba(0,38,116,0.10); color: #002674; border-color: rgba(0,38,116,0.25); }
-.govStepLine { height: 2px; width: 17%; background: rgba(0,0,0,0.12); }
+.govStep.active { background: rgb(22 88 137); color: white; border-color: rgba(0,38,116,0.25); }
+.govStepLine { height: 2px; width: 17%; background: rgb(22 88 137); }
 
 .govPrimaryBtn {
   border: none;
@@ -288,7 +288,7 @@
 
 .govGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
 .govField label {

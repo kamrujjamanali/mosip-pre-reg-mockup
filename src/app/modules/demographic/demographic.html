@@ -452,7 +452,7 @@
               <div class="govUploadLayout">
                 <div>
                   <div class="govDocPanel" *ngFor="let d of documents">
-                    <div class="govDocHead">{{ d.title }} <span *ngIf="d.required">• Required</span></div>
+                    <div class="govDocHead">{{ d.title }} <span *ngIf="d.required" class="required">*</span></div>
                     <div class="govDocBody">
                       <mat-form-field appearance="outline" class="w40 govMatField" style="margin-right: 9px;">
                         <mat-select [(ngModel)]="d.docType" placeholder="Document type">

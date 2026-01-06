@@ -36,30 +36,25 @@
      GOVT FOOTER (SVG STYLE)
      ========================= */
   .appFooter[data-theme='svg_gov'] {
-    background: linear-gradient(
-      90deg,
-      #002674 0%,
-      #0a3aa6 50%,
-      #002674 100%
-    );
+    background: #165889;
     color: #fff;
     position: relative;
   }
   
-  .appFooter[data-theme='svg_gov']::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(
-      90deg,
-      #002674 0%,
-      #fcd022 45%,
-      #007c2e 100%
-    );
-  }
+  // .appFooter[data-theme='svg_gov']::before {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   height: 4px;
+  //   background: linear-gradient(
+  //     90deg,
+  //     #002674 0%,
+  //     #fcd022 45%,
+  //     #007c2e 100%
+  //   );
+  // }
   
   .appFooter[data-theme='svg_gov'] .footerInner {
     max-width: 1200px;
