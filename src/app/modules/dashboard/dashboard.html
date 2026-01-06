@@ -27,7 +27,7 @@
     <div class="govHeader">
       <div class="govHeaderInner">
         <div class="govHeaderActions">
-          <button mat-stroked-button type="button" class="govOutline" (click)="bookOrModifyAppointment()">
+          <button mat-raised-button type="button" class="govPrimary" (click)="bookOrModifyAppointment()">
             <mat-icon class="btnIcon">event_note</mat-icon>
             BOOK/MODIFY APPOINTMENT
           </button>
@@ -128,7 +128,7 @@
               <span class="dot">•</span>
               <span>Language: <b>{{ app.languages }}</b></span>
               <span class="dot">•</span>
-              <span class="pill" [class.pPending]="app.status==='Pending Appointment'"
+              <span class="pill" [class.pPending]="app.status==='Application Incomplete'"
                                 [class.pDone]="app.status==='Completed'"
                                 [class.pDraft]="app.status==='Draft'">
                 {{ app.status }}

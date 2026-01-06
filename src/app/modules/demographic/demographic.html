@@ -77,19 +77,28 @@
               <div class="dCardHead">Date Of Birth : <span class="req">*</span></div>
               <div class="dCardBody dDobRow">
                 <mat-form-field class="w100 lineField" appearance="fill">
-                  <input matInput placeholder="DD/MM/YYYY" [(ngModel)]="dob" />
-                  <button mat-icon-button matSuffix type="button"><mat-icon>calendar_month</mat-icon></button>
-                </mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="dobPicker"
+                    placeholder="DD/MM/YYYY"
+                    [(ngModel)]="dob"
+                  />
+                  <button mat-icon-button matSuffix type="button" (click)="dobPicker.open()">
+                    <mat-icon>calendar_month</mat-icon>
+                  </button>
+                
+                  <mat-datepicker #dobPicker></mat-datepicker>
+                </mat-form-field>                
 
                 <div class="dOr">OR</div>
 
                 <mat-form-field class="w100 lineField" appearance="fill">
                   <input matInput placeholder="Age" [(ngModel)]="age" />
                 </mat-form-field>
-
-                <mat-form-field class="w100 lineField" appearance="fill">
+                <label for="" style="margin-top: 15px;">Years</label>
+                <!-- <mat-form-field class="w100 lineField" appearance="fill">
                   <input matInput placeholder="Years" [(ngModel)]="years" />
-                </mat-form-field>
+                </mat-form-field> -->
               </div>
             </div>
 
@@ -341,18 +350,24 @@
                 <div class="govField">
                   <label>Date of Birth <span class="required">*</span></label>
                   <div class="govDobRow">
-                    <mat-form-field appearance="outline" class="w100 govMatField">
-                      <input matInput placeholder="DD/MM/YYYY" [(ngModel)]="dob" />
+                    <!-- ✅ DOB with datepicker -->
+                    <mat-form-field appearance="fill" class="w100 govMatField">
+                      <input matInput [matDatepicker]="dobPickerGov" placeholder="DD/MM/YYYY" [(ngModel)]="dob" />
+                      <button mat-icon-button matSuffix type="button" (click)="dobPickerGov.open()">
+                        <mat-icon>calendar_month</mat-icon>
+                      </button>
+                      <mat-datepicker #dobPickerGov></mat-datepicker>
                     </mat-form-field>
                     <div class="govOr">OR</div>
-                    <mat-form-field appearance="outline" class="w100 govMatField">
+                    <mat-form-field appearance="fill" class="w100 govMatField">
                       <input matInput placeholder="Age" [(ngModel)]="age" />
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="w100 govMatField">
+                    <label>Years</label>
+                    <!-- <mat-form-field appearance="fill" class="w100 govMatField">
                       <input matInput placeholder="Years" [(ngModel)]="years" />
-                    </mat-form-field>
+                    </mat-form-field> -->
                   </div>
-                </div>
+                </div>                
 
                 <div class="govField">
                   <label>Gender <span class="required">*</span></label>

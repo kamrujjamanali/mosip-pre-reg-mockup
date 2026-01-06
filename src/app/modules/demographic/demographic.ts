@@ -45,6 +45,8 @@ type PreviewKind = 'pdf' | 'image' | 'none';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   templateUrl: './demographic.html',
   styleUrl: './demographic.scss',

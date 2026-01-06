@@ -15,7 +15,7 @@ type AppItem = {
   id: string;
   name: string;
   appointmentDate: string; // "--" style
-  status: 'Pending Appointment' | 'Completed' | 'Draft';
+  status: 'Application Incomplete' | 'Completed' | 'Draft';
   languages: string;
   selected: boolean;
 };
@@ -43,7 +43,7 @@ export class Dashboard {
       id: '61390154910692',
       name: 'Gyuguu',
       appointmentDate: '2026-01-10',
-      status: 'Pending Appointment',
+      status: 'Application Incomplete',
       languages: 'English',
       selected: true,
     },
@@ -51,7 +51,7 @@ export class Dashboard {
       id: '61390154910688',
       name: 'Ravi S.',
       appointmentDate: '2026-01-06',
-      status: 'Pending Appointment',
+      status: 'Application Incomplete',
       languages: 'English, Français',
       selected: false,
     },
@@ -75,7 +75,7 @@ export class Dashboard {
       id: '61390154910691',
       name: 'Kumar T.',
       appointmentDate: '2026-01-12',
-      status: 'Pending Appointment',
+      status: 'Application Incomplete',
       languages: 'English, हिंदी',
       selected: false,
     },

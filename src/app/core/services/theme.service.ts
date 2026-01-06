@@ -87,43 +87,41 @@ export class ThemeService {
       },
     },
     
-    {
-      name: 'modern',
-      label: 'Version 2',
-      vars: {
-        '--bg': '#0b1220',
-        '--text': '#111827',
-        '--muted': '#6b7280',
-    
-        // screenshot-style RED accent
-        '--accent': '#c0392b',
-    
-        '--btn-disabled-bg': '#e5e7eb',
-        '--btn-disabled-text': '#9ca3af',
-        '--btn-enabled-bg': '#c0392b',
-        '--btn-enabled-text': '#ffffff',
-    
-        '--card-bg': '#ffffff',
-        '--card-border': 'rgba(2, 6, 23, 0.10)',
-        '--card-shadow': '0 24px 70px rgba(0,0,0,0.25)',
-    
-        // put your image in assets and use this path
-        '--modern-bg-image': "url('assets/login-back.jpg')",
+    // {
+    //   name: 'modern',
+    //   label: 'Version 2',
+    //   vars: {
+    //     '--bg': '#0b1220',
+    //     '--text': '#111827',
+    //     '--muted': '#6b7280',
 
-        '--modal-accent': '#c0392b',          // modern red like your screenshot example
-        '--modal-title': '#c0392b',
-        '--modal-border': 'rgba(2,6,23,0.10)',
-        '--modal-bg': '#ffffff',
-        '--modal-shadow': '0 24px 70px rgba(0,0,0,0.22)',
-        '--modal-btn-outline': '#c0392b',
+    //     '--accent': '#c0392b',
+    
+    //     '--btn-disabled-bg': '#e5e7eb',
+    //     '--btn-disabled-text': '#9ca3af',
+    //     '--btn-enabled-bg': '#c0392b',
+    //     '--btn-enabled-text': '#ffffff',
+    
+    //     '--card-bg': '#ffffff',
+    //     '--card-border': 'rgba(2, 6, 23, 0.10)',
+    //     '--card-shadow': '0 24px 70px rgba(0,0,0,0.25)',
+  
+    //     '--modern-bg-image': "url('assets/login-back.jpg')",
 
-        '--tnc-accent': '#c0392b',
-        '--tnc-bg': '#ffffff',
-        '--tnc-border': 'rgba(2,6,23,0.10)',
-        '--tnc-shadow': '0 24px 70px rgba(0,0,0,0.22)',
-        '--tnc-muted': '#667085',
-      },
-    },    
+    //     '--modal-accent': '#c0392b',
+    //     '--modal-title': '#c0392b',
+    //     '--modal-border': 'rgba(2,6,23,0.10)',
+    //     '--modal-bg': '#ffffff',
+    //     '--modal-shadow': '0 24px 70px rgba(0,0,0,0.22)',
+    //     '--modal-btn-outline': '#c0392b',
+
+    //     '--tnc-accent': '#c0392b',
+    //     '--tnc-bg': '#ffffff',
+    //     '--tnc-border': 'rgba(2,6,23,0.10)',
+    //     '--tnc-shadow': '0 24px 70px rgba(0,0,0,0.22)',
+    //     '--tnc-muted': '#667085',
+    //   },
+    // },    
   ];
 
   private readonly themeSubject = new BehaviorSubject<ThemeName>('default');
