@@ -165,7 +165,7 @@ export class DemographicComponent {
   // Upload screen model
   // ---------------------------
   allowedTypes = 'pdf, jpeg, png, jpg';
-  maxSizeText = '2mb';
+  maxSizeText = '10mb';
 
   docTypesIdentity: Option[] = [
     { code: 'NID', label: 'National ID' },
