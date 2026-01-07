@@ -112,11 +112,13 @@ body {
 /* INPUT focus */
 .govMatField.mat-focused input.mat-mdc-input-element {
   border-color: #002674 !important;
+  box-shadow: 0 0 0 4px rgba(0,38,116,0.10);
 }
 
 /* SELECT focus */
 .govMatField.mat-focused .mat-mdc-select-trigger {
   border-color: #002674 !important;
+  box-shadow: 0 0 0 4px rgba(0,38,116,0.10);
 }
 
 
