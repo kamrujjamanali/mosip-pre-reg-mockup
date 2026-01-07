@@ -339,120 +339,137 @@
 
             <!-- GOVT DEMO (ALL fields) -->
             <ng-container *ngIf="activeStepIndex === 0">
-              <div class="govGrid">
-                <div class="govField">
-                  <label>Full Name <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <input matInput placeholder="Full Name" [(ngModel)]="fullName" />
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>Date of Birth <span class="required">*</span></label>
-                  <div class="govDobRow">
-                    <!-- ✅ DOB with datepicker -->
-                    <mat-form-field appearance="fill" class="w100 govMatField">
-                      <input matInput [matDatepicker]="dobPickerGov" placeholder="DD/MM/YYYY" [(ngModel)]="dob" />
-                      <button mat-icon-button matSuffix type="button" (click)="dobPickerGov.open()">
-                        <mat-icon>calendar_month</mat-icon>
-                      </button>
-                      <mat-datepicker #dobPickerGov></mat-datepicker>
-                    </mat-form-field>
-                    <div class="govOr">OR</div>
-                    <mat-form-field appearance="fill" class="w100 govMatField">
-                      <input matInput placeholder="Age" [(ngModel)]="age" />
-                    </mat-form-field>
-                    <label>Years</label>
-                    <!-- <mat-form-field appearance="fill" class="w100 govMatField">
-                      <input matInput placeholder="Years" [(ngModel)]="years" />
-                    </mat-form-field> -->
+              <div class="govDemographicLayout">
+                <div>
+                  <div class="govDocPanel">
+                    <div class="govDocHead">Personal Information</div>
+                    <div class="govDocBody govDemoGraphicBody">
+                      <div class="govField">
+                        <label>Full Name <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <input matInput placeholder="Full Name" [(ngModel)]="fullName" />
+                        </mat-form-field>
+                      </div>
+                      <div class="govField">
+                        <label>Date of Birth <span class="required">*</span></label>
+                        <div class="govDobRow">
+                          <!-- ✅ DOB with datepicker -->
+                          <mat-form-field appearance="fill" class="w100 govMatField">
+                            <input matInput [matDatepicker]="dobPickerGov" placeholder="DD/MM/YYYY" [(ngModel)]="dob" />
+                            <button mat-icon-button matSuffix type="button" (click)="dobPickerGov.open()">
+                              <mat-icon>calendar_month</mat-icon>
+                            </button>
+                            <mat-datepicker #dobPickerGov></mat-datepicker>
+                          </mat-form-field>
+                          <div class="govOr">OR</div>
+                          <mat-form-field appearance="fill" class="w100 govMatField">
+                            <input matInput placeholder="Age" [(ngModel)]="age" />
+                          </mat-form-field>
+                          <label>Years</label>
+                        </div>
+                      </div>                
+      
+                      <div class="govField">
+                        <label>Gender <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <mat-select [(ngModel)]="gender" placeholder="Gender">
+                            <mat-option *ngFor="let g of genders" [value]="g.code">{{ g.label }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
                   </div>
-                </div>                
 
-                <div class="govField">
-                  <label>Gender <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <mat-select [(ngModel)]="gender" placeholder="Gender">
-                      <mat-option *ngFor="let g of genders" [value]="g.code">{{ g.label }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
+                  <div class="govDocPanel">
+                    <div class="govDocHead">Address Details</div>
+                    <div class="govDocBody govDemoGraphicBody">
+                      <div class="govField">
+                        <label>Residence Status <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <mat-select [(ngModel)]="residenceStatus" placeholder="Residence Status">
+                            <mat-option *ngFor="let r of residenceStatuses" [value]="r.code">{{ r.label }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+      
+                      <div class="govField">
+                        <label>Address <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <input matInput placeholder="Address" [(ngModel)]="address" />
+                        </mat-form-field>
+                      </div>
+      
+                      <div class="govField">
+                        <label>Region <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <mat-select [(ngModel)]="region" placeholder="Region">
+                            <mat-option *ngFor="let r of regions" [value]="r.code">{{ r.label }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+      
+                      <div class="govField">
+                        <label>Province <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <mat-select [(ngModel)]="parish" placeholder="Province" (selectionChange)="onParishChange()">
+                            <mat-option *ngFor="let p of parishes" [value]="p.code">{{ p.label }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+      
+                      <div class="govField">
+                        <label>City <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <mat-select [(ngModel)]="city" placeholder="City" [disabled]="!parish">
+                            <mat-option *ngFor="let c of cities" [value]="c.code">{{ c.label }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+      
+                      <div class="govField">
+                        <label>Zone <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <mat-select [(ngModel)]="zone" placeholder="Zone">
+                            <mat-option *ngFor="let z of zones" [value]="z.code">{{ z.label }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+      
+                      <div class="govField">
+                        <label>Postal Code <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <mat-select [(ngModel)]="postalCode" placeholder="Postal Code">
+                            <mat-option *ngFor="let p of postalCodes" [value]="p.code">{{ p.label }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
 
-                <div class="govField">
-                  <label>Residence Status <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <mat-select [(ngModel)]="residenceStatus" placeholder="Residence Status">
-                      <mat-option *ngFor="let r of residenceStatuses" [value]="r.code">{{ r.label }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>Address <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <input matInput placeholder="Address" [(ngModel)]="address" />
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>Region <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <mat-select [(ngModel)]="region" placeholder="Region">
-                      <mat-option *ngFor="let r of regions" [value]="r.code">{{ r.label }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>Province <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <mat-select [(ngModel)]="parish" placeholder="Province" (selectionChange)="onParishChange()">
-                      <mat-option *ngFor="let p of parishes" [value]="p.code">{{ p.label }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>City <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <mat-select [(ngModel)]="city" placeholder="City" [disabled]="!parish">
-                      <mat-option *ngFor="let c of cities" [value]="c.code">{{ c.label }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>Zone <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <mat-select [(ngModel)]="zone" placeholder="Zone">
-                      <mat-option *ngFor="let z of zones" [value]="z.code">{{ z.label }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>Postal Code <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <mat-select [(ngModel)]="postalCode" placeholder="Postal Code">
-                      <mat-option *ngFor="let p of postalCodes" [value]="p.code">{{ p.label }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>Phone <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <input matInput placeholder="Phone" [(ngModel)]="phone" />
-                  </mat-form-field>
-                </div>
-
-                <div class="govField">
-                  <label>Email <span class="required">*</span></label>
-                  <mat-form-field appearance="outline" class="w100 govMatField">
-                    <input matInput placeholder="Email" [(ngModel)]="email" />
-                  </mat-form-field>
+                  <div class="govDocPanel">
+                    <div class="govDocHead">Contact Details</div>
+                    <div class="govDocBody govDemoGraphicBody">
+                      <div class="govField">
+                        <label>Phone <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <input matInput placeholder="Phone" [(ngModel)]="phone" />
+                        </mat-form-field>
+                      </div>
+      
+                      <div class="govField">
+                        <label>Email <span class="required">*</span></label>
+                        <mat-form-field appearance="outline" class="w100 govMatField">
+                          <input matInput placeholder="Email" [(ngModel)]="email" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <!-- <div class="govGrid">
+                
+              </div> -->
 
               <div class="govBottom">
                 <div></div>

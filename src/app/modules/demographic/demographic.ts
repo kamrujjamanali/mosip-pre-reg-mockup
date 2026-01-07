@@ -75,11 +75,9 @@ export class DemographicComponent {
   ];
 
   residenceStatuses: Option[] = [
-    { code: 'CIT', label: 'Citizen' },
-    { code: 'PR', label: 'Permanent Resident' },
-    { code: 'TR', label: 'Temporary Resident' },
-    { code: 'VIS', label: 'Visitor' },
-  ];
+    { code: 'FOREIGNER', label: 'Foreigner' },
+    { code: 'NON_FOREIGNER', label: 'Non-Foreigner' },
+  ];  
 
   regions: Option[] = [
     { code: 'MAIN', label: 'St. Vincent (Mainland)' },

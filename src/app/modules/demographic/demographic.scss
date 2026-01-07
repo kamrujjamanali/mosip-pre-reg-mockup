@@ -337,6 +337,14 @@
 .govPreviewTitle { padding: 10px 12px; font-weight: 900; border-bottom: 1px solid rgba(0,0,0,0.08); color: #002674; }
 .govPreviewEmpty { padding: 16px; color: #6b7280; }
 
+
+.govDemographicLayout { display: grid; grid-template-columns: 100% 1fr; gap: 16px; }
+.govDemoGraphicBody {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
 /* ==========================
    MODERN THEME
    ========================== */
