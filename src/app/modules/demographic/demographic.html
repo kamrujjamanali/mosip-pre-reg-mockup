@@ -14,7 +14,7 @@
     <ng-container *ngSwitchCase="'default'">
 
       <!-- Top MOSIP stepper strip -->
-      <div class="dStepper">
+      <div *ngIf="!isUploadPreview" class="dStepper">
         <div class="dStep active">
           <mat-icon class="dIcon">description</mat-icon>
           <span class="dStepText activeText">Demographics Details</span>
@@ -41,21 +41,18 @@
 
       <div class="dContainer">
 
-        <div class="dHeaderRow">
+        <div *ngIf="!isUploadPreview" class="dHeaderRow">
           <div class="dTitle">
             {{ activeStepIndex === 0 ? 'Demographic Details' : 'Upload Documents' }}
             ( {{ dataCaptureLanguage }} )
           </div>
 
-          <button *ngIf="activeStepIndex === 0"
-                  type="button"
-                  class="dBtnPink"
-                  (click)="changeDataCaptureLanguages()">
+          <button *ngIf="activeStepIndex === 0" type="button" class="dBtnPink" (click)="changeDataCaptureLanguages()">
             CHANGE DATA CAPTURE LANGUAGES
           </button>
         </div>
 
-        <div class="dPinkDivider"></div>
+        <div *ngIf="!isUploadPreview" class="dPinkDivider"></div>
 
         <!-- ===================== DEMOGRAPHIC (12 fields) ===================== -->
         <ng-container *ngIf="activeStepIndex === 0">
@@ -77,18 +74,13 @@
               <div class="dCardHead">Date Of Birth : <span class="req">*</span></div>
               <div class="dCardBody dDobRow">
                 <mat-form-field class="w100 lineField" appearance="fill">
-                  <input
-                    matInput
-                    [matDatepicker]="dobPicker"
-                    placeholder="DD/MM/YYYY"
-                    [(ngModel)]="dob"
-                  />
+                  <input matInput [matDatepicker]="dobPicker" placeholder="DD/MM/YYYY" [(ngModel)]="dob" />
                   <button mat-icon-button matSuffix type="button" (click)="dobPicker.open()">
                     <mat-icon>calendar_month</mat-icon>
                   </button>
-                
+
                   <mat-datepicker #dobPicker></mat-datepicker>
-                </mat-form-field>                
+                </mat-form-field>
 
                 <div class="dOr">OR</div>
 
@@ -225,79 +217,180 @@
         </ng-container>
 
         <!-- ===================== UPLOAD (eye icon -> right preview) ===================== -->
+        <!-- ===================== UPLOAD (DEFAULT) ===================== -->
         <ng-container *ngIf="activeStepIndex === 1">
-          <div class="dUploadNote">
-            Allowed file type : {{ allowedTypes }} and allowed file size : {{ maxSizeText }}
-          </div>
 
-          <div class="dUploadLayout">
-            <div class="dUploadLeft">
-              <div class="dUploadCard" *ngFor="let d of documents">
-                <div class="dCardHead">
-                  {{ d.title }} <span *ngIf="d.required">: <span class="req">*</span></span>
-                </div>
+          <!-- ✅ NORMAL UPLOAD SCREEN -->
+          <ng-container *ngIf="!isUploadPreview">
+            <div class="dUploadNote">
+              Allowed file type : {{ allowedTypes }} and allowed file size : {{ maxSizeText }}
+            </div>
 
-                <div class="dUploadBody">
-                  <div class="dUploadRow">
-                    <mat-form-field class="w100 lineField" appearance="fill">
-                      <mat-select [(ngModel)]="d.docType" placeholder="{{ d.title }}">
-                        <mat-option *ngFor="let opt of getDocTypeOptions(d.key)" [value]="opt.code">
-                          {{ opt.label }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field class="w100 lineField" appearance="fill">
-                      <input matInput placeholder="Document Reference Id" [(ngModel)]="d.refId" />
-                    </mat-form-field>
-
-                    <input #fileInput type="file" class="hiddenFile"
-                           accept=".pdf,.png,.jpg,.jpeg"
-                           (change)="onFileSelected(d, $event)" />
-
-                    <button type="button" class="dBrowse" (click)="browseFile(d, fileInput)">BROWSE</button>
+            <div class="dUploadLayout">
+              <div class="dUploadLeft">
+                <div class="dUploadCard" *ngFor="let d of documents">
+                  <div class="dCardHead">
+                    {{ d.title }} <span *ngIf="d.required">: <span class="req">*</span></span>
                   </div>
 
-                  <div class="dFileRow" *ngIf="d.fileName">
-                    <span class="dFileName">{{ d.fileName }}</span>
-                    <div class="dFileIcons">
-                      <button mat-icon-button type="button" (click)="preview(d)" title="Preview">
-                        <mat-icon>visibility</mat-icon>
-                      </button>
-                      <button mat-icon-button type="button" (click)="remove(d)" title="Remove">
-                        <mat-icon>delete</mat-icon>
-                      </button>
+                  <div class="dUploadBody">
+                    <div class="dUploadRow">
+                      <mat-form-field class="w100 lineField" appearance="fill">
+                        <mat-select [(ngModel)]="d.docType" placeholder="{{ d.title }}">
+                          <mat-option *ngFor="let opt of getDocTypeOptions(d.key)" [value]="opt.code">
+                            {{ opt.label }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field class="w100 lineField" appearance="fill">
+                        <input matInput placeholder="Document Reference Id" [(ngModel)]="d.refId" />
+                      </mat-form-field>
+
+                      <input #fileInput type="file" class="hiddenFile" accept=".pdf,.png,.jpg,.jpeg"
+                        (change)="onFileSelected(d, $event)" />
+
+                      <button type="button" class="dBrowse" (click)="browseFile(d, fileInput)">BROWSE</button>
+                    </div>
+
+                    <div class="dFileRow" *ngIf="d.fileName">
+                      <span class="dFileName">{{ d.fileName }}</span>
+                      <div class="dFileIcons">
+                        <button mat-icon-button type="button" (click)="preview(d)" title="Preview">
+                          <mat-icon>visibility</mat-icon>
+                        </button>
+                        <button mat-icon-button type="button" (click)="remove(d)" title="Remove">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
+
               </div>
 
-            </div>
+              <div class="dUploadRight">
+                <div class="dPreviewShell">
+                  <div class="dPreviewTitle" *ngIf="selectedPreviewTitle">{{ selectedPreviewTitle }}</div>
 
-            <div class="dUploadRight">
-              <div class="dPreviewShell">
-                <div class="dPreviewTitle" *ngIf="selectedPreviewTitle">{{ selectedPreviewTitle }}</div>
+                  <div class="dPreviewEmpty" *ngIf="previewKind === 'none'">
+                    Click the eye icon to preview PDF/Image here.
+                  </div>
 
-                <div class="dPreviewEmpty" *ngIf="previewKind === 'none'">
-                  Click the eye icon to preview PDF/Image here.
-                </div>
+                  <iframe *ngIf="previewKind === 'pdf' && safePdfUrl" class="previewFrame" [src]="safePdfUrl">
+                  </iframe>
 
-                <iframe *ngIf="previewKind === 'pdf' && safePdfUrl"
-                        class="previewFrame"
-                        [src]="safePdfUrl">
-                </iframe>
-
-                <div *ngIf="previewKind === 'image' && safeImgUrl" class="imgWrap">
-                  <img [src]="safeImgUrl" alt="preview" />
+                  <div *ngIf="previewKind === 'image' && safeImgUrl" class="imgWrap">
+                    <img [src]="safeImgUrl" alt="preview" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="dBottomBar2">
-            <button class="dBtnOutline" type="button" (click)="goToDemographic()">BACK</button>
-            <button class="dBtnPink" type="button" (click)="goToDashboard()">CONTINUE</button>
-          </div>
+
+            <div class="dBottomBar2">
+              <button class="dBtnOutline" type="button" (click)="goToDemographic()">BACK</button>
+
+              <!-- ✅ IMPORTANT: Continue now opens Preview (same step) -->
+              <button class="dBtnPink" type="button" (click)="openUploadPreview()">CONTINUE</button>
+            </div>
+          </ng-container>
+
+
+          <!-- ✅ PREVIEW SCREEN INSIDE UPLOAD STEP (DEFAULT) -->
+          <ng-container *ngIf="isUploadPreview">
+
+            <div class="dPreviewHeaderRow">
+              <div class="dPreviewTitleTop">Preview ( {{ dataCaptureLanguage }} )</div>
+
+              <button type="button" class="dPreviewModify" (click)="goToDemographic()">
+                <mat-icon>edit</mat-icon> modify
+              </button>
+            </div>
+
+            <div class="dPinkDivider"></div>
+
+            <div class="dPreviewGrid">
+              <div class="dPreviewRow">
+                <div class="k">Full Name :</div>
+                <div class="v">{{ fullName }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Date Of Birth :</div>
+                <div class="v">{{ dobPreviewText }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Gender :</div>
+                <div class="v">{{ genderLabel }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Residence Status :</div>
+                <div class="v">{{ residenceLabel }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Address :</div>
+                <div class="v">{{ address }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Region :</div>
+                <div class="v">{{ regionLabel }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Province :</div>
+                <div class="v">{{ parishLabel }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">City :</div>
+                <div class="v">{{ cityLabel }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Zone :</div>
+                <div class="v">{{ zoneLabel }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Postal Code :</div>
+                <div class="v">{{ postalLabel }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Phone :</div>
+                <div class="v">{{ phone }}</div>
+              </div>
+              <div class="dPreviewRow">
+                <div class="k">Email :</div>
+                <div class="v">{{ email }}</div>
+              </div>
+            </div>
+
+            <div class="dDocsHeaderRow">
+              <div class="dDocsTitle">Documents Uploaded</div>
+
+              <button type="button" class="dPreviewModify" (click)="backToUploadEdit()">
+                <mat-icon>edit</mat-icon> modify
+              </button>
+            </div>
+
+            <div class="dDocsDivider"></div>
+
+            <div class="dDocsGrid">
+              <div class="dDocCol" *ngFor="let d of documents">
+                <div class="dDocHead">{{ d.title }}</div>
+                <div class="dDocFile">{{ d.fileName || '-' }}</div>
+              </div>
+            </div>
+
+            <!-- ✅ bottom buttons like screenshot -->
+            <div class="dBottomBarPreview">
+              <button class="dBtnOutline" type="button" (click)="backToUploadEdit()">BACK</button>
+
+              <div class="dRightBtns">
+                <button class="dBtnOutline" type="button">ADD APPLICANT</button>
+                <button class="dBtnPink" type="button" (click)="continueFromPreview()">CONTINUE</button>
+              </div>
+            </div>
+
+          </ng-container>
+
         </ng-container>
+
 
       </div>
     </ng-container>
@@ -311,26 +404,26 @@
         <div class="govShell">
           <div class="govCard">
 
-            <div class="govHeaderRow">
+            <div *ngIf="!isUploadPreview" class="govHeaderRow">
               <div class="govPageTitle">
                 {{ activeStepIndex === 0 ? 'Demographic Details' : 'Upload Documents' }}
                 <span class="muted"> ( {{ dataCaptureLanguage }} )</span>
               </div>
 
-              <button *ngIf="activeStepIndex === 0"
-                      type="button"
-                      class="govPrimaryBtn"
-                      (click)="changeDataCaptureLanguages()">
+              <button *ngIf="activeStepIndex === 0" type="button" class="govPrimaryBtn"
+                (click)="changeDataCaptureLanguages()">
                 Change Data Capture Languages
               </button>
             </div>
 
-            <div class="govDivider"></div>
+            <div *ngIf="!isUploadPreview" class="govDivider"></div>
 
-            <div class="govStepper">
-              <button type="button" class="govStep" [class.active]="activeStepIndex === 0" (click)="goToDemographic()">Demographics</button>
+            <div *ngIf="!isUploadPreview" class="govStepper">
+              <button type="button" class="govStep" [class.active]="activeStepIndex === 0"
+                (click)="goToDemographic()">Demographics</button>
               <div class="govStepLine"></div>
-              <button type="button" class="govStep" [class.active]="activeStepIndex === 1" (click)="goToUpload()">Upload</button>
+              <button type="button" class="govStep" [class.active]="activeStepIndex === 1"
+                (click)="goToUpload()">Upload</button>
               <div class="govStepLine"></div>
               <button type="button" class="govStep" [class.active]="activeStepIndex === 2">Book Appointment</button>
               <div class="govStepLine"></div>
@@ -367,8 +460,8 @@
                           </mat-form-field>
                           <label>Years</label>
                         </div>
-                      </div>                
-      
+                      </div>
+
                       <div class="govField">
                         <label>Gender <span class="required">*</span></label>
                         <mat-form-field appearance="outline" class="w100 govMatField">
@@ -391,14 +484,14 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-      
+
                       <div class="govField">
                         <label>Address <span class="required">*</span></label>
                         <mat-form-field appearance="outline" class="w100 govMatField">
                           <input matInput placeholder="Address" [(ngModel)]="address" />
                         </mat-form-field>
                       </div>
-      
+
                       <div class="govField">
                         <label>Region <span class="required">*</span></label>
                         <mat-form-field appearance="outline" class="w100 govMatField">
@@ -407,7 +500,7 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-      
+
                       <div class="govField">
                         <label>Province <span class="required">*</span></label>
                         <mat-form-field appearance="outline" class="w100 govMatField">
@@ -416,7 +509,7 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-      
+
                       <div class="govField">
                         <label>City <span class="required">*</span></label>
                         <mat-form-field appearance="outline" class="w100 govMatField">
@@ -425,7 +518,7 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-      
+
                       <div class="govField">
                         <label>Zone <span class="required">*</span></label>
                         <mat-form-field appearance="outline" class="w100 govMatField">
@@ -434,7 +527,7 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-      
+
                       <div class="govField">
                         <label>Postal Code <span class="required">*</span></label>
                         <mat-form-field appearance="outline" class="w100 govMatField">
@@ -455,7 +548,7 @@
                           <input matInput placeholder="Phone" [(ngModel)]="phone" />
                         </mat-form-field>
                       </div>
-      
+
                       <div class="govField">
                         <label>Email <span class="required">*</span></label>
                         <mat-form-field appearance="outline" class="w100 govMatField">
@@ -479,57 +572,155 @@
 
             <!-- GOVT UPLOAD (eye -> preview) -->
             <ng-container *ngIf="activeStepIndex === 1">
-              <div class="govUploadNote">Allowed: {{ allowedTypes }} • Max: {{ maxSizeText }}</div>
+              <ng-container *ngIf="!isUploadPreview">
+                <div class="govUploadNote">Allowed: {{ allowedTypes }} • Max: {{ maxSizeText }}</div>
 
-              <div class="govUploadLayout">
-                <div>
-                  <div class="govDocPanel" *ngFor="let d of documents">
-                    <div class="govDocHead">{{ d.title }} <span *ngIf="d.required" class="required">*</span></div>
-                    <div class="govDocBody">
-                      <mat-form-field appearance="outline" class="w40 govMatField" style="margin-right: 9px;">
-                        <mat-select [(ngModel)]="d.docType" placeholder="Document type">
-                          <mat-option *ngFor="let opt of getDocTypeOptions(d.key)" [value]="opt.code">{{ opt.label }}</mat-option>
-                        </mat-select>
-                      </mat-form-field>
+                <div class="govUploadLayout">
+                  <div>
+                    <div class="govDocPanel" *ngFor="let d of documents">
+                      <div class="govDocHead">{{ d.title }} <span *ngIf="d.required" class="required">*</span></div>
+                      <div class="govDocBody">
+                        <mat-form-field appearance="outline" class="w40 govMatField" style="margin-right: 9px;">
+                          <mat-select [(ngModel)]="d.docType" placeholder="Document type">
+                            <mat-option *ngFor="let opt of getDocTypeOptions(d.key)" [value]="opt.code">{{ opt.label
+                              }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
 
-                      <mat-form-field appearance="outline" class="w40 govMatField" style="margin-right: 9px;">
-                        <input matInput placeholder="Reference Id" [(ngModel)]="d.refId" />
-                      </mat-form-field>
+                        <mat-form-field appearance="outline" class="w40 govMatField" style="margin-right: 9px;">
+                          <input matInput placeholder="Reference Id" [(ngModel)]="d.refId" />
+                        </mat-form-field>
 
-                      <input #fileInput type="file" class="hiddenFile"
-                             accept=".pdf,.png,.jpg,.jpeg"
-                             (change)="onFileSelected(d, $event)" />
+                        <input #fileInput type="file" class="hiddenFile" accept=".pdf,.png,.jpg,.jpeg"
+                          (change)="onFileSelected(d, $event)" />
 
-                      <button type="button" class="govOutlineBtn" (click)="browseFile(d, fileInput)">Browse</button>
+                        <button type="button" class="govOutlineBtn" (click)="browseFile(d, fileInput)">Browse</button>
 
-                      <div class="govFileRow" *ngIf="d.fileName">
-                        <span class="govFileName">{{ d.fileName }}</span>
-                        <span class="govFileActions">
-                          <button mat-icon-button type="button" (click)="preview(d)"><mat-icon>visibility</mat-icon></button>
-                          <button mat-icon-button type="button" (click)="remove(d)"><mat-icon>delete</mat-icon></button>
-                        </span>
+                        <div class="govFileRow" *ngIf="d.fileName">
+                          <span class="govFileName">{{ d.fileName }}</span>
+                          <span class="govFileActions">
+                            <button mat-icon-button type="button"
+                              (click)="preview(d)"><mat-icon>visibility</mat-icon></button>
+                            <button mat-icon-button type="button"
+                              (click)="remove(d)"><mat-icon>delete</mat-icon></button>
+                          </span>
+                        </div>
                       </div>
+                    </div>
+
+                  </div>
+
+                  <div class="govPreview">
+                    <div class="govPreviewTitle" *ngIf="selectedPreviewTitle">{{ selectedPreviewTitle }}</div>
+                    <div class="govPreviewEmpty" *ngIf="previewKind === 'none'">Preview will appear here.</div>
+
+                    <iframe *ngIf="previewKind === 'pdf' && safePdfUrl" class="previewFrame"
+                      [src]="safePdfUrl"></iframe>
+
+                    <div *ngIf="previewKind === 'image' && safeImgUrl" class="imgWrap">
+                      <img [src]="safeImgUrl" alt="preview" />
                     </div>
                   </div>
 
                 </div>
+                <div class="govBottom">
+                  <button type="button" class="govOutlineBtn" (click)="goToDemographic()">Back</button>
+                  <button type="button" class="govPrimaryBtn" (click)="openUploadPreview()">Continue</button>
+                </div>
+              </ng-container>
 
-                <div class="govPreview">
-                  <div class="govPreviewTitle" *ngIf="selectedPreviewTitle">{{ selectedPreviewTitle }}</div>
-                  <div class="govPreviewEmpty" *ngIf="previewKind === 'none'">Preview will appear here.</div>
+              <!-- GOV PREVIEW (inside upload step) -->
+              <ng-container *ngIf="isUploadPreview">
 
-                  <iframe *ngIf="previewKind === 'pdf' && safePdfUrl" class="previewFrame" [src]="safePdfUrl"></iframe>
+                <div class="govPreviewHeader">
+                  <div class="govPreviewTitleTop">Preview <span class="muted">( {{ dataCaptureLanguage }} )</span></div>
 
-                  <div *ngIf="previewKind === 'image' && safeImgUrl" class="imgWrap">
-                    <img [src]="safeImgUrl" alt="preview" />
+                  <button mat-raised-button type="button" class="govOutlineBtn" (click)="goToDemographic()">
+                    <mat-icon class="btnIcon">edit</mat-icon> Modify
+                  </button>
+                </div>
+
+                <div class="govDivider"></div>
+
+                <div class="govPreviewList">
+                  <div class="row">
+                    <div class="k">Full Name :</div>
+                    <div class="v">{{ fullName }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Date Of Birth :</div>
+                    <div class="v">{{ dobPreviewText }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Gender :</div>
+                    <div class="v">{{ genderLabel }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Residence Status :</div>
+                    <div class="v">{{ residenceLabel }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Address :</div>
+                    <div class="v">{{ address }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Region :</div>
+                    <div class="v">{{ regionLabel }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Province :</div>
+                    <div class="v">{{ parishLabel }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">City :</div>
+                    <div class="v">{{ cityLabel }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Zone :</div>
+                    <div class="v">{{ zoneLabel }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Postal Code :</div>
+                    <div class="v">{{ postalLabel }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Phone :</div>
+                    <div class="v">{{ phone }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="k">Email :</div>
+                    <div class="v">{{ email }}</div>
                   </div>
                 </div>
 
-              </div>
-              <div class="govBottom">
-                <button type="button" class="govOutlineBtn" (click)="goToDemographic()">Back</button>
-                <button type="button" class="govPrimaryBtn" (click)="goToDashboard()">Continue</button>
-              </div>
+                <div class="govDocsHeader">
+                  <div class="govDocsTitle">Documents Uploaded</div>
+                  <button mat-raised-button type="button" class="govOutlineBtn" (click)="backToUploadEdit()">
+                    <mat-icon class="btnIcon">edit</mat-icon> Modify
+                  </button>
+                </div>
+
+                <div class="govDocPanel">
+                  <div class="govDocBody govDocsGrid">
+                    <div class="govDocItem" *ngFor="let d of documents">
+                      <div class="h">{{ d.title }}</div>
+                      <div class="f">{{ d.fileName || '-' }}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="govBottom">
+                  <button mat-stroked-button type="button" class="govOutlineBtn"
+                    (click)="backToUploadEdit()">Back</button>
+
+                  <div class="govRightBtns">
+                    <button mat-raised-button type="button" class="govOutlineBtn">Add Applicant</button>
+                    <button mat-stroked-button type="button" class="govPrimaryBtn"
+                      (click)="continueFromPreview()">Continue</button>
+                  </div>
+                </div>
+
+              </ng-container>
             </ng-container>
 
           </div>
@@ -544,26 +735,26 @@
       <div class="modernPhotoBg">
         <div class="modernCardShell">
 
-          <div class="modernTop">
+          <div *ngIf="!isUploadPreview" class="modernTop">
             <div class="modernTitle">
               {{ activeStepIndex === 0 ? 'Demographic Details' : 'Upload Documents' }}
               <span class="muted"> ( {{ dataCaptureLanguage }} )</span>
             </div>
 
-            <button *ngIf="activeStepIndex === 0"
-                    type="button"
-                    class="modernPrimaryBtn"
-                    (click)="changeDataCaptureLanguages()">
+            <button *ngIf="activeStepIndex === 0" type="button" class="modernPrimaryBtn"
+              (click)="changeDataCaptureLanguages()">
               Change Data Capture Languages
             </button>
           </div>
 
-          <div class="modernLine"></div>
+          <div *ngIf="!isUploadPreview" class="modernLine"></div>
 
-          <div class="modernPills">
-            <button type="button" class="pill" [class.active]="activeStepIndex === 0" (click)="goToDemographic()">Demographics</button>
+          <div *ngIf="!isUploadPreview" class="modernPills">
+            <button type="button" class="pill" [class.active]="activeStepIndex === 0"
+              (click)="goToDemographic()">Demographics</button>
             <div class="modernStepLine"></div>
-            <button type="button" class="pill" [class.active]="activeStepIndex === 1" (click)="goToUpload()">Upload</button>
+            <button type="button" class="pill" [class.active]="activeStepIndex === 1"
+              (click)="goToUpload()">Upload</button>
             <div class="modernStepLine"></div>
             <button type="button" class="pill" [class.active]="activeStepIndex === 2">Book Appointment</button>
             <div class="modernStepLine"></div>
@@ -689,63 +880,156 @@
 
           <!-- MODERN UPLOAD -->
           <ng-container *ngIf="activeStepIndex === 1">
-            <div class="modernNote">Allowed: {{ allowedTypes }} • Max: {{ maxSizeText }}</div>
+            <ng-container *ngIf="!isUploadPreview">
+              <div class="modernNote">Allowed: {{ allowedTypes }} • Max: {{ maxSizeText }}</div>
 
-            <div class="modernUploadLayout">
-              <div>
-                <div class="modernDocTile" *ngFor="let d of documents">
-                  <div class="tileHead">
-                    <div class="tileTitle">{{ d.title }}</div>
-                    <div class="tileReq" *ngIf="d.required">Required</div>
-                  </div>
-
-                  <div class="tileBody">
-                    <mat-form-field appearance="outline" class="w39" style="margin-right: 9px;">
-                      <mat-select [(ngModel)]="d.docType" placeholder="Document type">
-                        <mat-option *ngFor="let opt of getDocTypeOptions(d.key)" [value]="opt.code">{{ opt.label }}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" class="w39" style="margin-right: 9px;">
-                      <input matInput placeholder="Reference ID" [(ngModel)]="d.refId" />
-                    </mat-form-field>
-                    <button type="button" class="modernOutlineBtn" (click)="browseFile(d, fileInput)">Browse</button>
-
-                    <input #fileInput type="file" class="hiddenFile"
-                           accept=".pdf,.png,.jpg,.jpeg"
-                           (change)="onFileSelected(d, $event)" />
-                    <div class="modernRow">
-                      <div class="fileMini" *ngIf="d.fileName">{{ d.fileName }}</div>
-                      <div class="tileActions">
-                        <button *ngIf="d.fileName" mat-icon-button type="button" (click)="preview(d)" title="Preview">
-                          <mat-icon>visibility</mat-icon>
-                        </button>
-                        <button *ngIf="d.fileName" mat-icon-button type="button" (click)="remove(d)" title="Remove">
-                          <mat-icon>delete</mat-icon>
-                        </button>
-                      </div>
+              <div class="modernUploadLayout">
+                <div>
+                  <div class="modernDocTile" *ngFor="let d of documents">
+                    <div class="tileHead">
+                      <div class="tileTitle">{{ d.title }}</div>
+                      <div class="tileReq" *ngIf="d.required">Required</div>
                     </div>
 
+                    <div class="tileBody">
+                      <mat-form-field appearance="outline" class="w39" style="margin-right: 9px;">
+                        <mat-select [(ngModel)]="d.docType" placeholder="Document type">
+                          <mat-option *ngFor="let opt of getDocTypeOptions(d.key)" [value]="opt.code">{{ opt.label
+                            }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="w39" style="margin-right: 9px;">
+                        <input matInput placeholder="Reference ID" [(ngModel)]="d.refId" />
+                      </mat-form-field>
+                      <button type="button" class="modernOutlineBtn" (click)="browseFile(d, fileInput)">Browse</button>
+
+                      <input #fileInput type="file" class="hiddenFile" accept=".pdf,.png,.jpg,.jpeg"
+                        (change)="onFileSelected(d, $event)" />
+                      <div class="modernRow">
+                        <div class="fileMini" *ngIf="d.fileName">{{ d.fileName }}</div>
+                        <div class="tileActions">
+                          <button *ngIf="d.fileName" mat-icon-button type="button" (click)="preview(d)" title="Preview">
+                            <mat-icon>visibility</mat-icon>
+                          </button>
+                          <button *ngIf="d.fileName" mat-icon-button type="button" (click)="remove(d)" title="Remove">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="modernPreview">
+                  <div class="prevTitle" *ngIf="selectedPreviewTitle">{{ selectedPreviewTitle }}</div>
+                  <div class="prevEmpty" *ngIf="previewKind === 'none'">Click eye icon to preview.</div>
+
+                  <iframe *ngIf="previewKind === 'pdf' && safePdfUrl" class="previewFrame" [src]="safePdfUrl"></iframe>
+
+                  <div *ngIf="previewKind === 'image' && safeImgUrl" class="imgWrap">
+                    <img [src]="safeImgUrl" alt="preview" />
                   </div>
                 </div>
+              </div>
+              <div class="modernBottom">
+                <button type="button" class="modernOutlineBtn" (click)="goToDemographic()">Back</button>
+                <button type="button" class="modernPrimaryBtn" (click)="openUploadPreview()">Continue</button>
+              </div>
+            </ng-container>
 
+            <ng-container *ngIf="isUploadPreview">
+
+              <div class="modernPreviewHeader">
+                <div class="modernPreviewTitleTop">
+                  Preview <span class="muted">( {{ dataCaptureLanguage }} )</span>
+                </div>
+
+                <button type="button" class="modernOutlineBtn" (click)="goToDemographic()">
+                  <mat-icon>edit</mat-icon> modify
+                </button>
               </div>
 
-              <div class="modernPreview">
-                <div class="prevTitle" *ngIf="selectedPreviewTitle">{{ selectedPreviewTitle }}</div>
-                <div class="prevEmpty" *ngIf="previewKind === 'none'">Click eye icon to preview.</div>
+              <div class="modernLine"></div>
 
-                <iframe *ngIf="previewKind === 'pdf' && safePdfUrl" class="previewFrame" [src]="safePdfUrl"></iframe>
-
-                <div *ngIf="previewKind === 'image' && safeImgUrl" class="imgWrap">
-                  <img [src]="safeImgUrl" alt="preview" />
+              <div class="modernPreviewList">
+                <div class="row">
+                  <div class="k">Full Name :</div>
+                  <div class="v">{{ fullName }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Date Of Birth :</div>
+                  <div class="v">{{ dobPreviewText }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Gender :</div>
+                  <div class="v">{{ genderLabel }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Residence Status :</div>
+                  <div class="v">{{ residenceLabel }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Address :</div>
+                  <div class="v">{{ address }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Region :</div>
+                  <div class="v">{{ regionLabel }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Province :</div>
+                  <div class="v">{{ parishLabel }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">City :</div>
+                  <div class="v">{{ cityLabel }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Zone :</div>
+                  <div class="v">{{ zoneLabel }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Postal Code :</div>
+                  <div class="v">{{ postalLabel }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Phone :</div>
+                  <div class="v">{{ phone }}</div>
+                </div>
+                <div class="row">
+                  <div class="k">Email :</div>
+                  <div class="v">{{ email }}</div>
                 </div>
               </div>
-            </div>
-            <div class="modernBottom">
-              <button type="button" class="modernOutlineBtn" (click)="goToDemographic()">Back</button>
-              <button type="button" class="modernPrimaryBtn" (click)="goToDashboard()">Continue</button>
-            </div>
+
+              <div class="modernDocsHeader">
+                <div class="modernDocsTitle">Documents Uploaded</div>
+                <button type="button" class="modernOutlineBtn" (click)="backToUploadEdit()">
+                  <mat-icon>edit</mat-icon> modify
+                </button>
+              </div>
+
+              <div class="modernDocsGrid">
+                <div class="modernDocBox" *ngFor="let d of documents">
+                  <div class="h">{{ d.title }}</div>
+                  <div class="f">{{ d.fileName || '-' }}</div>
+                </div>
+              </div>
+
+              <div class="modernBottom">
+                <button type="button" class="modernOutlineBtn" (click)="backToUploadEdit()">Back</button>
+
+                <div class="modernRightBtns">
+                  <button type="button" class="modernOutlineBtn">Add Applicant</button>
+                  <button type="button" class="modernPrimaryBtn" (click)="continueFromPreview()">Continue</button>
+                </div>
+              </div>
+
+
+            </ng-container>
           </ng-container>
 
         </div>

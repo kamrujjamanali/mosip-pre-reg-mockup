@@ -62,6 +62,9 @@ export class DemographicComponent {
   // 0 = demographic, 1 = upload
   activeStepIndex = 0;
 
+  /** ✅ Preview inside upload step */
+  isUploadPreview = false;
+
   // screen label
   dataCaptureLanguage = 'English';
 
@@ -225,6 +228,7 @@ export class DemographicComponent {
   // navigation
   goToDemographic() {
     this.activeStepIndex = 0;
+    this.isUploadPreview = false;
   }
 
   goToDashboard(): void {
@@ -233,7 +237,62 @@ export class DemographicComponent {
 
   goToUpload() {
     this.activeStepIndex = 1;
+    this.isUploadPreview = false;
   }
+
+   // when user finishes preview -> go next step (Book Appointment)
+  goToBookAppointment() {
+    this.activeStepIndex = 2;
+    this.isUploadPreview = false;
+  }
+
+  // -------------------------
+  // ✅ Upload -> Preview (same step)
+  // -------------------------
+  openUploadPreview() {
+    this.isUploadPreview = true; // stepper stays on Upload
+  }
+
+  backToUploadEdit() {
+    this.isUploadPreview = false;
+  }
+
+  continueFromPreview() {
+    // NOW stepper should move to next step
+    // this.goToBookAppointment();
+    this.goToDashboard();
+  }
+
+  // -------------------------
+  // ✅ Preview helpers
+  // -------------------------
+  get dobPreviewText(): string {
+    const v: any = this.dob;
+    if (!v) return '';
+    try {
+      const d = v instanceof Date ? v : new Date(v);
+      if (isNaN(d.getTime())) return String(v);
+      return new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      }).format(d);
+    } catch {
+      return String(v);
+    }
+  }
+
+  labelOf(list: Option[], code: string): string {
+    return list.find(x => x.code === code)?.label ?? code ?? '';
+  }
+
+  get genderLabel(): string { return this.labelOf(this.genders, this.gender); }
+  get residenceLabel(): string { return this.labelOf(this.residenceStatuses, this.residenceStatus); }
+  get regionLabel(): string { return this.labelOf(this.regions, this.region); }
+  get parishLabel(): string { return this.labelOf(this.parishes, this.parish); }
+  get cityLabel(): string { return this.labelOf(this.cities, this.city); }
+  get zoneLabel(): string { return this.labelOf(this.zones, this.zone); }
+  get postalLabel(): string { return this.labelOf(this.postalCodes, this.postalCode); }
 
   onParishChange() {
     this.city = '';

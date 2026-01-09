@@ -467,3 +467,326 @@
 .modernRow {
   display: flex; justify-content: space-between; align-items: center; margin-top: -10px; gap: 10px;
 }
+
+
+/* =========================================================
+   PREVIEW CSS (Preview is inside Upload step)
+   Works for: default, svg_gov, modern
+   ========================================================= */
+
+/* ==========================
+   DEFAULT PREVIEW (matches screenshot)
+   ========================== */
+   .dPreviewHeaderRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+  }
+  
+  .dPreviewTitleTop {
+    color: #fe528d;
+    font-weight: 1000;
+    font-size: 18px;
+  }
+  
+  .dPreviewModify {
+    border: none;
+    background: transparent;
+    color: #fe528d;
+    font-weight: 900;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .dPreviewGrid {
+    padding: 18px 0 8px;
+    max-width: 980px;
+  }
+  
+  .dPreviewRow {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 14px;
+    padding: 4px 0;
+  }
+  .dPreviewRow .k {
+    font-weight: 900;
+    color: #6b7280;
+  }
+  .dPreviewRow .v {
+    color: #374151;
+  }
+  
+  .dDocsHeaderRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+  }
+  
+  .dDocsTitle {
+    color: #fe528d;
+    font-weight: 1000;
+    font-size: 16px;
+  }
+  
+  .dDocsDivider {
+    height: 1px;
+    background: rgba(0,0,0,0.10);
+    margin: 10px 0 14px;
+  }
+  
+  .dDocsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    padding-bottom: 10px;
+  }
+  
+  .dDocCol .dDocHead {
+    font-weight: 900;
+    color: #6b7280;
+    margin-bottom: 8px;
+  }
+  
+  .dDocCol .dDocFile {
+    color: #374151;
+    font-size: 13px;
+    word-break: break-all;
+  }
+  
+  .dBottomBarPreview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding-top: 14px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+  
+  /* responsive default preview */
+  @media (max-width: 1200px) {
+    .dDocsGrid { grid-template-columns: repeat(2, 1fr); }
+    .dPreviewRow { grid-template-columns: 180px 1fr; }
+  }
+  
+  @media (max-width: 640px) {
+    .dPreviewRow { grid-template-columns: 1fr; gap: 6px; }
+    .dBottomBarPreview {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .dBottomBarPreview .dBtnPink,
+    .dBottomBarPreview .dBtnOutline {
+      width: 100%;
+    }
+  }
+  
+  
+  /* ==========================
+     GOV PREVIEW (inside upload step)
+     ========================== */
+  .govPreviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .govPreviewTitleTop {
+    font-size: 18px;
+    font-weight: 1000;
+    color: #002674;
+  }
+  
+  .govPreviewList {
+    padding: 10px 0 4px;
+    max-width: 980px;
+  }
+  
+  .govPreviewList .row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 14px;
+    padding: 4px 0;
+  }
+  
+  .govPreviewList .k {
+    font-weight: 900;
+    color: #526174;
+  }
+  
+  .govPreviewList .v {
+    color: #111827;
+  }
+  
+  .govDocsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .govDocsTitle {
+    font-weight: 1000;
+    color: #002674;
+  }
+  
+  .govDocsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  
+  .govDocItem .h {
+    font-weight: 900;
+    color: #526174;
+    margin-bottom: 6px;
+  }
+  
+  .govDocItem .f {
+    color: #111827;
+    font-size: 13px;
+    word-break: break-all;
+  }
+  
+  @media (max-width: 1200px) {
+    .govDocsGrid { grid-template-columns: repeat(2, 1fr); }
+    .govPreviewList .row { grid-template-columns: 180px 1fr; }
+  }
+  
+  @media (max-width: 640px) {
+    .govPreviewList .row { grid-template-columns: 1fr; gap: 6px; }
+  }
+  
+  
+  /* ==========================
+     MODERN PREVIEW (inside upload step)
+     ========================== */
+  .modernPreviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .modernPreviewTitleTop {
+    font-size: 18px;
+    font-weight: 1000;
+    color: #c0392b;
+  }
+  
+  .modernPreviewList {
+    padding: 10px 0 4px;
+    max-width: 980px;
+  }
+  
+  .modernPreviewList .row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 14px;
+    padding: 4px 0;
+  }
+  
+  .modernPreviewList .k {
+    font-weight: 900;
+    color: #6b7280;
+  }
+  
+  .modernPreviewList .v {
+    color: #111827;
+  }
+  
+  .modernDocsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .modernDocsTitle {
+    font-weight: 1000;
+    color: #111827;
+  }
+  
+  .modernDocsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    padding-bottom: 10px;
+  }
+  
+  .modernDocBox {
+    border: 1px solid rgba(2,6,23,0.10);
+    border-radius: 10px;
+    padding: 12px;
+    background: #fff;
+  }
+  
+  .modernDocBox .h {
+    font-weight: 900;
+    color: #6b7280;
+    margin-bottom: 6px;
+  }
+  
+  .modernDocBox .f {
+    color: #111827;
+    font-size: 13px;
+    word-break: break-all;
+  }
+  
+  @media (max-width: 1200px) {
+    .modernDocsGrid { grid-template-columns: repeat(2, 1fr); }
+    .modernPreviewList .row { grid-template-columns: 180px 1fr; }
+  }
+  
+  @media (max-width: 640px) {
+    .modernPreviewList .row { grid-template-columns: 1fr; gap: 6px; }
+  }
+  
+  /* DEFAULT preview right button group */
+.dRightBtns {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-left: auto; /* pushes group to right */
+}
+
+/* GOV preview right button group */
+.govRightBtns {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* MODERN preview right button group */
+.modernRightBtns {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* mobile stacking */
+@media (max-width: 640px) {
+  .dBottomBarPreview,
+  .govBottom,
+  .modernBottom {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .dRightBtns,
+  .govRightBtns,
+  .modernRightBtns {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+.btnIcon { margin-right: 8px; font-size: 18px; width: 18px; height: 18px; }
