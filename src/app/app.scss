@@ -1,5 +1,36 @@
+/* Prevent body from scrolling */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* App shell below fixed header */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--header-height));
+}
+
+/* Only this scrolls */
 .page-content {
-    // margin-top: 64px; /* Height of navbar */
-    // min-height: calc(100vh - 64px);
-    overflow-x: hidden;
-  }
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 84vh;
+}
+
+.page-content[data-theme='svg_gov'] {
+  max-height: 75vh;
+}
+
+.page-content[data-theme='modern'] {
+  max-height: 76vh;
+}
+
+/* Fixed footer */
+app-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}

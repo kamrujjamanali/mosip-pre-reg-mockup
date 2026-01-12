@@ -1,8 +1,9 @@
-    <app-navbar [isLoggedIn]="isLoggedIn"></app-navbar>
+<app-navbar [isLoggedIn]="isLoggedIn"></app-navbar>
 
-    <!-- Add top margin to body content so it doesn't hide under fixed navbar -->
-    <div class="page-content">
-        <!-- <app-login></app-login> -->
-      <router-outlet></router-outlet>
-    </div>
-    <app-footer></app-footer>
+<div class="app-shell">
+  <div class="page-content" [attr.data-theme]="theme">
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-footer></app-footer>
+</div>

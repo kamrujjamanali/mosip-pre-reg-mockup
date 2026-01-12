@@ -4,19 +4,20 @@ import { ThemeService } from './core/services/theme.service';
 import { LoginComponent } from "./modules/login/login";
 import { NavbarComponent } from './modules/navbar/navbar';
 import { Footer } from './modules/footer/footer';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [NavbarComponent, Footer, RouterOutlet],
+  imports: [CommonModule, NavbarComponent, Footer, RouterOutlet],
 })
 export class App implements OnInit {
   protected readonly title = signal('mosip-pre-reg-mockup');
-  theme$: any;
+  theme: any;
   isLoggedIn = false;
   constructor(private themeService: ThemeService) {
-    // this.theme$ = this.themeService.theme$;
+    this.theme = this.themeService.theme$.subscribe((t) => (this.theme = t));
   }
 
   ngOnInit(): void {
