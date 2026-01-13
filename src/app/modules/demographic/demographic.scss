@@ -790,3 +790,845 @@
 }
 
 .btnIcon { margin-right: 8px; font-size: 18px; width: 18px; height: 18px; }
+
+
+/* =========================================================
+   BOOK APPOINTMENT (DEFAULT) - matches screenshot
+   ========================================================= */
+   .dBookHeaderCard {
+    margin: 0 0 10px;
+    border: 1px solid rgba(0,0,0,0.10);
+    box-shadow: 0 2px 14px rgba(0,0,0,0.10);
+    background: #fff;
+    padding: 16px 18px;
+  }
+  .dBookTitle {
+    color: #fe528d;
+    font-weight: 1000;
+    font-size: 18px;
+  }
+  
+  .dBookTabsRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0 10px;
+  }
+  .dBookTabsLeft {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .dBookTab {
+    border: none;
+    background: transparent;
+    color: #6b7280;
+    font-weight: 1000;
+    cursor: pointer;
+    padding: 6px 0;
+  }
+  .dBookTab.active {
+    color: #1e88e5;
+  }
+  .dBookSub {
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 12px;
+    margin-left: -10px;
+  }
+  
+  .dBookSearchBtn {
+    width: 42px;
+    height: 42px;
+    border: 1px solid #fe528d;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+  .dBookSearchBtn mat-icon { color: #fe528d; }
+  
+  .dBookLayout {
+    display: grid;
+    grid-template-columns: 58% 1fr;
+    gap: 18px;
+    padding-top: 6px;
+  }
+  
+  .dCentreCard {
+    border: 1px solid rgba(254,82,141,0.55);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+    background: #fff;
+    padding: 14px 14px;
+    display: grid;
+    grid-template-columns: 42px 1fr 260px;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 14px;
+  }
+  .dCentreCard.selected {
+    border-color: #fe528d;
+  }
+  
+  .dCentreRadio {
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+  .dRadioOuter {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid #1e88e5;
+    display: grid;
+    place-items: center;
+  }
+  .dRadioOuter.on { border-color: #1e88e5; }
+  .dRadioInner {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #1e88e5;
+  }
+  
+  .dCentreLine1, .dCentreLine2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dCentreLine1 .pin, .dCentreLine2 .ph {
+    color: #fe528d;
+    font-size: 18px;
+    width: 18px; height: 18px;
+  }
+  .dCentreNameAddr .nm {
+    font-weight: 1000;
+    color: #111827;
+    font-size: 13px;
+  }
+  .dCentreNameAddr .addr {
+    color: #6b7280;
+    font-size: 12px;
+  }
+  .dCentreLine2 .contact {
+    color: #111827;
+    font-size: 12px;
+  }
+  
+  .dCentreTiming {
+    font-size: 12px;
+    color: #111827;
+    line-height: 1.5;
+    padding-top: 4px;
+    white-space: nowrap;
+  }
+  
+  .dMapShell {
+    height: 520px;
+    border: 1px solid rgba(0,0,0,0.10);
+    background: #fff;
+    overflow: hidden;
+  }
+  .dMapFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  .dBookBottomBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    margin-top: 8px;
+  }
+  .dBookRightBtns {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  
+  /* responsive */
+  @media (max-width: 1200px) {
+    .dBookLayout { grid-template-columns: 1fr; }
+    .dCentreCard { grid-template-columns: 42px 1fr; }
+    .dCentreTiming { white-space: normal; margin-top: 10px; grid-column: 1 / -1; }
+    .dMapShell { height: 420px; }
+  }
+  
+  /* =========================================================
+     BOOK APPOINTMENT (GOV)
+     ========================================================= */
+  .govBookTopRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0 12px;
+    width: 60%;
+  }
+  .govBookTabs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .govTab {
+    border: 2px solid rgba(0,38,116,0.20);
+    background: #fff;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-weight: 900;
+    cursor: pointer;
+    color: #002674;
+  }
+  .govTab.active {
+    background: rgba(0,38,116,0.08);
+    border-color: rgba(0,38,116,0.35);
+  }
+  .govFound { color: #526174; font-weight: 700; font-size: 12px; }
+  
+  .govBookLayout {
+    display: grid;
+    grid-template-columns: 60% 1fr;
+    gap: 16px;
+  }
+  .govSelected { outline: 2px solid rgba(0,38,116,0.22); }
+  
+  .govCentreHead {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .govRadio {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid #002674;
+    margin-top: 2px;
+  }
+  .govRadio.on {
+    background: #002674;
+    box-shadow: inset 0 0 0 4px #fff;
+  }
+  .govCentreName { font-weight: 1000; }
+  
+  .govCentreMeta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    color: #111827;
+    margin-bottom: 10px;
+  }
+  .govCentreTimes { color: #111827; font-size: 13px; line-height: 1.6; }
+  
+  /* =========================================================
+     BOOK APPOINTMENT (MODERN)
+     ========================================================= */
+  .modernBookTopRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0 12px;
+    width: 60%;
+  }
+  .modernBookTabs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mTab {
+    border: 1px solid rgba(2,6,23,0.12);
+    background: #fff;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  .mTab.active {
+    border-color: rgba(192,57,43,0.35);
+    background: rgba(192,57,43,0.08);
+    color: #c0392b;
+  }
+  
+  .modernBookLayout {
+    display: grid;
+    grid-template-columns: 60% 1fr;
+    gap: 16px;
+  }
+  
+  .mSelected { outline: 2px solid rgba(192,57,43,0.18); }
+  
+  .mRadio {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid #c0392b;
+    margin-right: 10px;
+    position: relative;
+    top: 2px;
+  }
+  .mRadio.on {
+    background: #c0392b;
+    box-shadow: inset 0 0 0 4px #fff;
+  }
+  
+  .mMeta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    color: #111827;
+  }
+  .mTimes { margin-top: 10px; font-size: 13px; line-height: 1.6; }
+  
+  /* responsive for gov/modern */
+  @media (max-width: 1200px) {
+    .govBookLayout, .modernBookLayout { grid-template-columns: 1fr; }
+  }
+  
+
+
+
+
+
+  /* =========================================================
+   BOOK APPOINTMENT - DEFAULT (exact screenshot structure)
+   ========================================================= */
+.dBookWrap {
+  background: #fff;
+  padding: 12px 0 0;
+}
+
+.dBookTopRow { padding: 0 0 10px; }
+.dBookTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.dBookTitleText {
+  color: #fe528d;
+  font-weight: 1000;
+  font-size: 14px;
+  min-width: 120px;
+}
+.dBookNote {
+  color: #fe528d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dDayRow {
+  display: grid;
+  grid-template-columns: 140px 1fr 140px;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-top: none;
+}
+.dDayNav {
+  border: none;
+  background: transparent;
+  color: #fe528d;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dDayNav.right { justify-content: center; }
+.dNavText { font-size: 12px; }
+
+.dDayCards {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.dDayCard {
+  width: 140px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #f2f2f2;
+  padding: 10px 10px;
+  cursor: pointer;
+  text-align: center;
+}
+.dDayCard.active {
+  border: 2px solid #fe528d;
+  background: #fff;
+}
+.dDayDate { font-weight: 1000; font-size: 13px; color: #111827; }
+.dDayWeek { font-size: 12px; color: #111827; margin-top: 2px; }
+.dDayCount { margin-top: 10px; font-weight: 1000; color: #111827; }
+.dDaySub { font-size: 11px; color: #6b7280; margin-top: 2px; }
+
+.dSlotsLayout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 18px;
+  padding-top: 14px;
+}
+
+.dSessionTabs {
+  display: flex;
+  gap: 18px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid rgba(254,82,141,0.45);
+}
+.dSessionTab {
+  border: none;
+  background: transparent;
+  font-weight: 900;
+  cursor: pointer;
+  color: #111827;
+  padding-bottom: 8px;
+}
+.dSessionTab.active {
+  color: #1e88e5;
+  border-bottom: 2px solid #1e88e5;
+}
+
+.dSlotGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-top: none;
+}
+.dSlotCell {
+  min-height: 60px;
+  padding: 10px 16px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-right: 1px solid rgba(0,0,0,0.06);
+  cursor: pointer;
+  background: #fff;
+}
+.dSlotCell:nth-child(3n) { border-right: none; }
+
+.dSlotCell.selected {
+  outline: 2px solid rgba(30,136,229,0.35);
+  background: rgba(30,136,229,0.04);
+}
+
+.dSlotTime { font-weight: 1000; color: #111827; }
+.dSlotAvail { margin-top: 24px; font-size: 11px; color: #3b82f6; font-weight: 900; }
+
+.dApplicants {
+  border: 1px solid rgba(0,0,0,0.08);
+  background: #fff;
+}
+.dApplicantsHead {
+  background: #2f6ea5;
+  color: #fff;
+  font-weight: 1000;
+  padding: 12px 14px;
+  font-size: 13px;
+}
+.dApplicantsBody { padding: 10px 14px; }
+
+.dApplicantRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.dApplicantName {
+  cursor: pointer;
+  font-weight: 800;
+  color: #111827;
+}
+.dApplicantName.selected { color: #1e88e5; }
+
+.dApplicantPlus {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.dApplicantDetails {
+  padding: 10px 0;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+/* bottom bar already present in your previous css */
+.dBookBottomBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  margin-top: 12px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.dBookRightBtns { display: flex; gap: 14px; }
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .dSlotsLayout { grid-template-columns: 1fr; }
+  .dDayRow { grid-template-columns: 1fr; }
+  .dDayNav { display: none; }
+  .dSlotGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .dSlotGrid { grid-template-columns: 1fr; }
+}
+
+
+/* GOV booking */
+.govBookNote { color: #526174; font-weight: 700; margin: 8px 0 12px; }
+.govDayRow {
+  display: grid;
+  grid-template-columns: 140px 1fr 140px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.govDayCards { display: flex; justify-content: center; gap: 12px; }
+.govDayCard {
+  width: 150px;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+.govDayCard.active { outline: 3px solid rgb(22 88 137); }
+.govDayCard .d { font-weight: 1000; color: #002674; }
+.govDayCard .w { color: #111827; font-size: 12px; }
+.govDayCard .c { margin-top: 10px; font-weight: 1000; }
+.govDayCard .s { color: #526174; font-size: 11px; }
+
+.govSlotsLayout { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+.govSessionTabs { display: flex; gap: 10px; margin-bottom: 10px; }
+.govTab {
+  border: 1px solid rgba(0,38,116,0.25);
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.govTab.active { background: rgba(0,38,116,0.08); color: #002674; }
+
+.govSlotGrid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(0,0,0,0.08); }
+.govSlot { padding: 14px; border-right: 1px solid rgba(0,0,0,0.06); border-top: 1px solid rgba(0,0,0,0.06); cursor: pointer; }
+.govSlot:nth-child(3n) { border-right: none; }
+.govSlot.selected { outline: 2px solid rgba(0,38,116,0.18); background: rgba(0,38,116,0.04); }
+.govSlot .t { font-weight: 1000; }
+.govSlot .a { margin-top: 18px; color: #2563eb; font-weight: 900; font-size: 11px; }
+
+.govApplicants { border: 1px solid rgba(0,0,0,0.08); border-radius: 14px; overflow: hidden; background: #fff; }
+.govApplicantsHead { background: rgb(22 88 137); color: #fff; font-weight: 1000; padding: 12px 14px; }
+.govApplicantsBody { padding: 10px 14px; }
+.govApplicantRow { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.govApplicantRow .n { cursor: pointer; font-weight: 900; }
+.govApplicantRow .n.selected { color: #002674; }
+.govPlus { border: none; background: transparent; font-size: 18px; cursor: pointer; }
+
+@media (max-width: 1200px) {
+  .govSlotsLayout { grid-template-columns: 1fr; }
+  .govDayRow { grid-template-columns: 1fr; }
+}
+
+/* MODERN booking */
+.modernBookNote { color: #6b7280; font-weight: 700; margin: 8px 0 12px; }
+
+.modernDayRow {
+  display: grid;
+  grid-template-columns: 140px 1fr 140px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.modernDayCards { display: flex; justify-content: center; gap: 12px; }
+.modernDayCard {
+  width: 150px;
+  border: 1px solid rgba(2,6,23,0.10);
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+.modernDayCard.active { outline: 2px solid rgba(192,57,43,0.20); }
+.modernDayCard .d { font-weight: 1000; color: #111827; }
+.modernDayCard .w { color: #111827; font-size: 12px; }
+.modernDayCard .c { margin-top: 10px; font-weight: 1000; }
+.modernDayCard .s { color: #6b7280; font-size: 11px; }
+
+.modernSlotsLayout { display: grid; grid-template-columns: 1fr 320px; gap: 16px; }
+.modernSessionTabs { display: flex; gap: 10px; margin-bottom: 10px; }
+
+.modernSlotGrid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid rgba(2,6,23,0.10); }
+.modernSlot { padding: 14px; border-right: 1px solid rgba(2,6,23,0.06); border-top: 1px solid rgba(2,6,23,0.06); cursor: pointer; }
+.modernSlot:nth-child(3n) { border-right: none; }
+.modernSlot.selected { outline: 2px solid rgba(192,57,43,0.18); background: rgba(192,57,43,0.04); }
+.modernSlot .t { font-weight: 1000; }
+.modernSlot .a { margin-top: 18px; color: #2563eb; font-weight: 900; font-size: 11px; }
+
+.modernApplicants { border: 1px solid rgba(2,6,23,0.10); border-radius: 10px; overflow: hidden; background: #fff; }
+.modernApplicantsHead { background: #2f6ea5; color: #fff; font-weight: 1000; padding: 12px 14px; }
+.modernApplicantsBody { padding: 10px 14px; }
+.modernApplicantRow { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(2,6,23,0.06); }
+.modernApplicantRow .n { cursor: pointer; font-weight: 900; }
+.modernApplicantRow .n.selected { color: #c0392b; }
+.mPlus { border: none; background: transparent; font-size: 18px; cursor: pointer; }
+
+@media (max-width: 1200px) {
+  .modernSlotsLayout { grid-template-columns: 1fr; }
+  .modernDayRow { grid-template-columns: 1fr; }
+}
+
+
+
+
+/* =========================================================
+   CONFIRMATION (DEFAULT) - exact screenshot
+   ========================================================= */
+   .dConfirmWrap {
+    background: #fff;
+    padding: 10px 0 0;
+  }
+  
+  .dConfirmSuccess {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(16,185,129,0.35);
+    background: rgba(16,185,129,0.08);
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .dConfirmSuccess .ok {
+    color: #10b981;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+  .dConfirmSuccess .msg {
+    color: #0f172a;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  
+  .dConfirmBlock {
+    border: 1px solid rgba(0,0,0,0.08);
+    background: #fff;
+    padding: 12px;
+  }
+  
+  .dConfirmGridTop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 30px;
+    align-items: start;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  .dConfirmGridTop .dKV {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .dConfirmGridTop .k { color: #6b7280; font-weight: 900; }
+  .dConfirmGridTop .v { color: #0f172a; font-weight: 800; }
+  
+  .dQR {
+    grid-column: 2 / 3;
+    justify-self: start;
+    margin-top: 10px;
+  }
+  
+  .dConfirmPinkLine {
+    height: 2px;
+    background: #fe528d;
+    opacity: 0.6;
+    margin: 10px 0;
+  }
+  
+  .dConfirmGridBottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 30px;
+    padding: 4px 0;
+  }
+  .dConfirmGridBottom .dKV {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .dConfirmGuidelines {
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 700;
+    padding: 6px 0 2px;
+  }
+  
+  .dConfirmBottomBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .dConfirmRightBtns {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .dBtnOutline.thin, .dBtnPink.thin {
+    height: 34px;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+  
+  /* responsive */
+  @media (max-width: 1200px) {
+    .dConfirmGridTop { grid-template-columns: 1fr; }
+    .dQR { grid-column: auto; }
+    .dConfirmGridBottom { grid-template-columns: 1fr; }
+    .dConfirmGridTop .dKV, .dConfirmGridBottom .dKV { grid-template-columns: 160px 1fr; }
+  }
+  
+  /* =========================================================
+     CONFIRMATION (GOV)
+     ========================================================= */
+  .govConfirmSuccess {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid rgba(0,124,46,0.25);
+    background: rgba(0,124,46,0.08);
+    padding: 10px 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    color: #0b1220;
+    font-weight: 800;
+    font-size: 13px;
+  }
+  .govConfirmSuccess mat-icon { color: #007c2e; }
+  
+  .govConfirmGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 18px;
+    align-items: start;
+  }
+  .govConfirmGrid .kv {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .govConfirmGrid .k { color: #526174; font-weight: 900; }
+  .govConfirmGrid .v { color: #111827; font-weight: 900; }
+  
+  .govConfirmGrid .qr { grid-column: 2 / 3; margin-top: 6px; }
+  .govConfirmDivider { grid-column: 1 / -1; height: 1px; background: rgba(0,0,0,0.10); margin: 6px 0; }
+  .govConfirmGuides { grid-column: 1 / -1; color: #526174; font-size: 12px; font-weight: 700; }
+  
+  @media (max-width: 1200px) {
+    .govConfirmGrid { grid-template-columns: 1fr; }
+    .govConfirmGrid .qr { grid-column: auto; }
+    .govConfirmGrid .kv { grid-template-columns: 160px 1fr; }
+  }
+  
+  /* =========================================================
+     CONFIRMATION (MODERN)
+     ========================================================= */
+  .modernConfirmSuccess {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid rgba(34,197,94,0.25);
+    background: rgba(34,197,94,0.08);
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    color: #111827;
+    font-weight: 800;
+    font-size: 13px;
+  }
+  .modernConfirmSuccess mat-icon { color: #22c55e; }
+  
+  .modernConfirmCard {
+    border: 1px solid rgba(2,6,23,0.10);
+    border-radius: 10px;
+    background: #fff;
+    padding: 14px;
+  }
+  
+  .modernConfirmGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 18px;
+  }
+  .modernConfirmGrid .kv {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .modernConfirmGrid .k { color: #6b7280; font-weight: 900; }
+  .modernConfirmGrid .v { color: #111827; font-weight: 1000; }
+  .modernConfirmGrid .qr { grid-column: 2 / 3; margin-top: 6px; }
+  
+  .modernConfirmLine { height: 1px; background: rgba(2,6,23,0.10); margin: 12px 0; }
+  
+  .modernConfirmGrid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 18px;
+  }
+  .modernConfirmGrid2 .kv {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .modernConfirmGuides { color: #6b7280; font-size: 12px; font-weight: 700; }
+  
+  @media (max-width: 1200px) {
+    .modernConfirmGrid, .modernConfirmGrid2 { grid-template-columns: 1fr; }
+    .modernConfirmGrid .qr { grid-column: auto; }
+    .modernConfirmGrid .kv, .modernConfirmGrid2 .kv { grid-template-columns: 160px 1fr; }
+  }
+  
+
+
+  .qr-dummy-real {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #000;
+    background:
+      /* finder squares */
+      linear-gradient(#000 0 0) left 8px top 8px / 24px 24px no-repeat,
+      linear-gradient(#fff 0 0) left 12px top 12px / 16px 16px no-repeat,
+      linear-gradient(#000 0 0) left 16px top 16px / 8px 8px no-repeat,
+  
+      linear-gradient(#000 0 0) right 8px top 8px / 24px 24px no-repeat,
+      linear-gradient(#fff 0 0) right 12px top 12px / 16px 16px no-repeat,
+      linear-gradient(#000 0 0) right 16px top 16px / 8px 8px no-repeat,
+  
+      linear-gradient(#000 0 0) left 8px bottom 8px / 24px 24px no-repeat,
+      linear-gradient(#fff 0 0) left 12px bottom 12px / 16px 16px no-repeat,
+      linear-gradient(#000 0 0) left 16px bottom 16px / 8px 8px no-repeat,
+  
+      /* random QR noise */
+      repeating-linear-gradient(
+        0deg,
+        #000 0 2px,
+        #fff 2px 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(0,0,0,0.8) 0 2px,
+        rgba(255,255,255,0.8) 2px 4px
+      );
+  
+    background-blend-mode: normal;
+  }
+  

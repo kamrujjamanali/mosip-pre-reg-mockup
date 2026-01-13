@@ -43,8 +43,15 @@
 
         <div *ngIf="!isUploadPreview" class="dHeaderRow">
           <div class="dTitle">
-            {{ activeStepIndex === 0 ? 'Demographic Details' : 'Upload Documents' }}
-            ( {{ dataCaptureLanguage }} )
+            {{ activeStepIndex === 0 ? 'Demographic Details' : activeStepIndex === 0 ? 'Book Appointment' : 'Upload Documents' }}
+                @if(activeStepIndex<2) {
+                  <span class="muted"> ( {{ dataCaptureLanguage }} )</span>
+                }
+                @if(activeStepIndex == 2 && selectSlots) {
+                  <div class="dBookNote">
+                    Please note that the application details cannot be modified once appointment is booked for it.
+                  </div>
+                }
           </div>
 
           <button *ngIf="activeStepIndex === 0" type="button" class="dBtnPink" (click)="changeDataCaptureLanguages()">
@@ -391,6 +398,250 @@
 
         </ng-container>
 
+        <!-- ===================== BOOK APPOINTMENT (DEFAULT) ===================== -->
+<ng-container *ngIf="activeStepIndex === 2">
+  <ng-container *ngIf="!selectSlots">
+    <div class="dBookTabsRow">
+      <div class="dBookTabsLeft">
+        <button type="button"
+                class="dBookTab"
+                [class.active]="bookTab==='recommended'"
+                (click)="bookTab='recommended'">
+          Recommended Centres
+        </button>
+        <span class="dBookSub">( Found {{ centres.length }} centers. )</span>
+  
+        <button type="button"
+                class="dBookTab"
+                [class.active]="bookTab==='nearby'"
+                (click)="bookTab='nearby'">
+          Nearby
+        </button>
+      </div>
+  
+      <button type="button" class="dBookSearchBtn" title="Search">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  
+    <div class="dBookLayout">
+      <!-- LEFT -->
+      <div class="dBookLeft">
+  
+        <div class="dCentreCard"
+             *ngFor="let c of centres"
+             [class.selected]="c.id===selectedCentreId"
+             (click)="selectedCentreId=c.id">
+  
+          <div class="dCentreRadio">
+            <div class="dRadioOuter" [class.on]="c.id===selectedCentreId">
+              <div class="dRadioInner" *ngIf="c.id===selectedCentreId"></div>
+            </div>
+          </div>
+  
+          <div class="dCentreInfo">
+            <div class="dCentreLine1">
+              <mat-icon class="pin">location_on</mat-icon>
+              <div class="dCentreNameAddr">
+                <div class="nm">{{ c.name }}</div>
+                <div class="addr">{{ c.addressLine }}</div>
+              </div>
+            </div>
+  
+            <div class="dCentreLine2" *ngIf="c.contactName || c.contactPhone">
+              <mat-icon class="ph">call</mat-icon>
+              <div class="contact">
+                {{ c.contactName }} , {{ c.contactPhone }}
+              </div>
+            </div>
+          </div>
+  
+          <div class="dCentreTiming">
+            <div>{{ c.timingText }}</div>
+            <div>{{ c.lunchText }}</div>
+            <div>{{ c.openDaysText }}</div>
+          </div>
+        </div>
+  
+      </div>
+  
+      <!-- RIGHT MAP -->
+      <div class="dBookRight">
+        <div class="dMapShell">
+          <iframe *ngIf="mapEmbedUrl" class="dMapFrame" [src]="mapEmbedUrl"></iframe>
+        </div>
+      </div>
+    </div>
+  
+    <!-- bottom bar like screenshot -->
+    <div class="dBookBottomBar">
+      <button class="dBtnOutline" type="button" (click)="bookBack()">BACK</button>
+  
+      <div class="dBookRightBtns">
+        <button class="dBtnOutline" type="button" (click)="bookLater()">BOOK LATER</button>
+        <button class="dBtnPink" type="button" (click)="bookContinue()">CONTINUE</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="selectSlots">
+    <div class="dBookWrap">
+      <!-- Date carousel -->
+      <div class="dDayRow">
+        <button type="button" class="dDayNav" (click)="prevDays()">
+          <span class="dNavText">Previous</span>
+        </button>
+  
+        <div class="dDayCards">
+          <div class="dDayCard"
+               *ngFor="let day of visibleDays; let i=index"
+               [class.active]="i===selectedDayIndex"
+               (click)="selectDay(i)">
+            <div class="dDayDate">{{ fmtDay(day.date) }}</div>
+            <div class="dDayWeek">{{ fmtWeekday(day.date) }}</div>
+            <div class="dDayCount">{{ day.availableCount }}</div>
+            <div class="dDaySub">Available Bookings</div>
+          </div>
+        </div>
+  
+        <button type="button" class="dDayNav right" (click)="nextDays()">
+          <span class="dNavText">Next</span>
+        </button>
+      </div>
+  
+      <!-- Tabs + layout -->
+      <div class="dSlotsLayout">
+        <!-- left main -->
+        <div class="dSlotsLeft">
+          <div class="dSessionTabs">
+            <button type="button" class="dSessionTab"
+                    [class.active]="selectedSession==='morning'"
+                    (click)="setSession('morning')">Morning</button>
+            <button type="button" class="dSessionTab"
+                    [class.active]="selectedSession==='afternoon'"
+                    (click)="setSession('afternoon')">Afternoon</button>
+          </div>
+  
+          <div class="dSlotGrid">
+            <div class="dSlotCell"
+                 *ngFor="let s of filteredSlots"
+                 [class.selected]="s.id===selectedSlotId"
+                 (click)="selectSlot(s)">
+              <div class="dSlotTime">{{ s.start }} - {{ s.end }}</div>
+              <div class="dSlotAvail">{{ s.available }} slots</div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- right applicants panel -->
+        <div class="dApplicants">
+          <div class="dApplicantsHead">Available Applicants</div>
+  
+          <div class="dApplicantsBody">
+            <div class="dApplicantRow" *ngFor="let a of applicants">
+              <div class="dApplicantName"
+                   [class.selected]="a.id===selectedApplicantId"
+                   (click)="selectApplicant(a)">
+                {{ a.name }}
+              </div>
+              <button type="button" class="dApplicantPlus" (click)="toggleApplicant(a)">
+                {{ a.expanded ? '−' : '+' }}
+              </button>
+            </div>
+  
+            <div class="dApplicantExpand" *ngFor="let a of applicants">
+              <div *ngIf="a.expanded" class="dApplicantDetails">
+                Applicant Details will appear here (mock).
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+
+    <div class="dBookBottomBar">
+      <button class="dBtnOutline" type="button" (click)="backFromSlotSelection()">BACK</button>
+  
+      <div class="dBookRightBtns">
+        <button class="dBtnOutline" type="button" (click)="bookLater()">BOOK LATER</button>
+        <button class="dBtnPink" type="button" (click)="continueAfterSlotSelection()">CONTINUE</button>
+      </div>
+    </div>
+  </ng-container>
+
+</ng-container>
+
+<!-- ===================== CONFIRMATION (DEFAULT) ===================== -->
+<ng-container *ngIf="activeStepIndex === 3">
+
+  <div class="dConfirmWrap">
+
+    <!-- green success strip -->
+    <div class="dConfirmSuccess">
+      <mat-icon class="ok">check_circle</mat-icon>
+      <div class="msg">
+        <b>{{ applicationId }}</b> : The Application ID and Appointment details have been sent to the registered email id and phone number
+      </div>
+    </div>
+
+    <!-- top info block -->
+    <div class="dConfirmBlock">
+      <div class="dConfirmGridTop">
+        <div class="dKV">
+          <div class="k">Application ID :</div>
+          <div class="v">{{ applicationId }}</div>
+        </div>
+
+        <div class="dKV">
+          <div class="k">Appointment Date &amp; Time :</div>
+          <div class="v">{{ appointmentDateTimeText }}</div>
+        </div>
+
+        <div class="dKV">
+          <div class="k">Center Contact Number :</div>
+          <div class="v">{{ centerContactNumber }}</div>
+        </div>
+
+        <div class="qr-dummy-real"></div>
+      </div>
+
+      <div class="dConfirmPinkLine"></div>
+
+      <!-- bottom info -->
+      <div class="dConfirmGridBottom">
+        <div class="dKV">
+          <div class="k">Name :</div>
+          <div class="v">{{ confirmName }}</div>
+        </div>
+
+        <div class="dKV">
+          <div class="k">Center Name :</div>
+          <div class="v">{{ confirmCenterName }}</div>
+        </div>
+      </div>
+
+      <div class="dConfirmPinkLine"></div>
+
+      <div class="dConfirmGuidelines">
+        {{ guidelinesText }}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- bottom bar buttons -->
+  <div class="dConfirmBottomBar">
+    <button class="dBtnOutline thin" type="button" (click)="sendEmailSms()">SEND EMAIL/SMS</button>
+
+    <div class="dConfirmRightBtns">
+      <button class="dBtnOutline thin" type="button" (click)="downloadPdf()">DOWNLOAD PDF</button>
+      <button class="dBtnPink thin" type="button" (click)="printConfirmation()">PRINT</button>
+    </div>
+  </div>
+
+</ng-container>
+
 
       </div>
     </ng-container>
@@ -406,8 +657,15 @@
 
             <div *ngIf="!isUploadPreview" class="govHeaderRow">
               <div class="govPageTitle">
-                {{ activeStepIndex === 0 ? 'Demographic Details' : 'Upload Documents' }}
-                <span class="muted"> ( {{ dataCaptureLanguage }} )</span>
+                {{ activeStepIndex === 0 ? 'Demographic Details' : activeStepIndex === 0 ? 'Book Appointment' : 'Upload Documents' }}
+                @if(activeStepIndex<2) {
+                  <span class="muted"> ( {{ dataCaptureLanguage }} )</span>
+                }
+                @if(activeStepIndex == 2 && selectSlots) {
+                  <div class="dBookNote">
+                    Please note that the application details cannot be modified once appointment is booked for it.
+                  </div>
+                }
               </div>
 
               <button *ngIf="activeStepIndex === 0" type="button" class="govPrimaryBtn"
@@ -723,6 +981,196 @@
               </ng-container>
             </ng-container>
 
+            <!-- ===================== BOOK APPOINTMENT (GOV) ===================== -->
+<ng-container *ngIf="activeStepIndex === 2">
+  <ng-container *ngIf="!selectSlots">
+    <div class="govBookTopRow">
+      <div class="govBookTabs">
+        <button type="button" class="govTab" [class.active]="bookTab==='recommended'" (click)="bookTab='recommended'">
+          Recommended Centres
+        </button>
+        <button type="button" class="govTab" [class.active]="bookTab==='nearby'" (click)="bookTab='nearby'">
+          Nearby
+        </button>
+        <span class="govFound">( Found {{ centres.length }} centers. )</span>
+      </div>
+  
+      <button mat-raised-button type="button" class="govOutlineBtn" title="Search">
+        <mat-icon class="btnIcon">search</mat-icon> Search
+      </button>
+    </div>
+  
+    <div class="govBookLayout">
+      <div>
+        <div class="govDocPanel" *ngFor="let c of centres" (click)="selectedCentreId=c.id"
+             [class.govSelected]="c.id===selectedCentreId">
+          <div class="govDocHead">
+            <div class="govCentreHead">
+              <div class="govRadio" [class.on]="c.id===selectedCentreId"></div>
+              <div>
+                <div class="govCentreName">{{ c.name }}</div>
+                <div class="muted">{{ c.addressLine }}</div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="govDocBody">
+            <div class="govCentreMeta" *ngIf="c.contactName || c.contactPhone">
+              <mat-icon>call</mat-icon>
+              <span>{{ c.contactName }} , {{ c.contactPhone }}</span>
+            </div>
+            <div class="govCentreTimes">
+              <div>{{ c.timingText }}</div>
+              <div>{{ c.lunchText }}</div>
+              <div>{{ c.openDaysText }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="govPreview">
+        <div class="govPreviewTitle">Map</div>
+        <iframe *ngIf="mapEmbedUrl" class="previewFrame" [src]="mapEmbedUrl"></iframe>
+      </div>
+    </div>
+  
+    <div class="govBottom">
+      <button type="button" class="govOutlineBtn" (click)="bookBack()">Back</button>
+  
+      <div class="govRightBtns">
+        <button type="button" class="govOutlineBtn" (click)="bookLater()">Book Later</button>
+        <button type="button" class="govPrimaryBtn" (click)="bookContinue()">Continue</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="selectSlots">
+    <div class="govDayRow">
+      <button type="button" class="govOutlineBtn" (click)="prevDays()">Previous</button>
+  
+      <div class="govDayCards">
+        <div class="govDayCard"
+             *ngFor="let day of visibleDays; let i=index"
+             [class.active]="i===selectedDayIndex"
+             (click)="selectDay(i)">
+          <div class="d">{{ fmtDay(day.date) }}</div>
+          <div class="w">{{ fmtWeekday(day.date) }}</div>
+          <div class="c">{{ day.availableCount }}</div>
+          <div class="s">Available Bookings</div>
+        </div>
+      </div>
+  
+      <button type="button" class="govOutlineBtn" (click)="nextDays()">Next</button>
+    </div>
+  
+    <div class="govSlotsLayout">
+      <div>
+        <div class="govSessionTabs">
+          <button type="button" class="govTab" [class.active]="selectedSession==='morning'" (click)="setSession('morning')">
+            Morning
+          </button>
+          <button type="button" class="govTab" [class.active]="selectedSession==='afternoon'" (click)="setSession('afternoon')">
+            Afternoon
+          </button>
+        </div>
+  
+        <div class="govSlotGrid">
+          <div class="govSlot"
+               *ngFor="let s of filteredSlots"
+               [class.selected]="s.id===selectedSlotId"
+               (click)="selectSlot(s)">
+            <div class="t">{{ s.start }} - {{ s.end }}</div>
+            <div class="a">{{ s.available }} slots</div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="govApplicants">
+        <div class="govApplicantsHead">Available Applicants</div>
+        <div class="govApplicantsBody">
+          <div class="govApplicantRow" *ngFor="let a of applicants">
+            <div class="n" [class.selected]="a.id===selectedApplicantId" (click)="selectApplicant(a)">{{ a.name }}</div>
+            <button type="button" class="govPlus" (click)="toggleApplicant(a)">{{ a.expanded ? '−' : '+' }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="govBottom">
+      <button type="button" class="govOutlineBtn" (click)="backFromSlotSelection()">Back</button>
+  
+      <div class="govRightBtns">
+        <button type="button" class="govOutlineBtn" (click)="bookLater()">Book Later</button>
+        <button type="button" class="govPrimaryBtn" (click)="continueAfterSlotSelection()">
+          Continue
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+</ng-container>
+
+<!-- ===================== CONFIRMATION (GOV) ===================== -->
+<ng-container *ngIf="activeStepIndex === 3">
+
+  <div class="govConfirmSuccess">
+    <mat-icon>check_circle</mat-icon>
+    <div>
+      <b>{{ applicationId }}</b> : Application and Appointment details have been sent to the registered email and phone.
+    </div>
+  </div>
+
+  <div class="govDocPanel">
+    <div class="govDocBody govConfirmGrid">
+
+      <div class="kv">
+        <div class="k">Application ID :</div>
+        <div class="v">{{ applicationId }}</div>
+      </div>
+
+      <div class="kv">
+        <div class="k">Appointment Date &amp; Time :</div>
+        <div class="v">{{ appointmentDateTimeText }}</div>
+      </div>
+
+      <div class="kv">
+        <div class="k">Center Contact Number :</div>
+        <div class="v">{{ centerContactNumber }}</div>
+      </div>
+
+      <div class="qr-dummy-real"></div>
+
+      <div class="govConfirmDivider"></div>
+
+      <div class="kv">
+        <div class="k">Name :</div>
+        <div class="v">{{ confirmName }}</div>
+      </div>
+
+      <div class="kv">
+        <div class="k">Center Name :</div>
+        <div class="v">{{ confirmCenterName }}</div>
+      </div>
+
+      <div class="govConfirmDivider"></div>
+
+      <div class="govConfirmGuides">{{ guidelinesText }}</div>
+
+    </div>
+  </div>
+
+  <div class="govBottom">
+    <button type="button" class="govOutlineBtn" (click)="sendEmailSms()">Send Email/SMS</button>
+
+    <div class="govRightBtns">
+      <button type="button" class="govOutlineBtn" (click)="downloadPdf()">Download PDF</button>
+      <button type="button" class="govPrimaryBtn" (click)="printConfirmation()">Print</button>
+    </div>
+  </div>
+
+</ng-container>
+
+
           </div>
         </div>
       </div>
@@ -1031,6 +1479,202 @@
 
             </ng-container>
           </ng-container>
+
+          <!-- ===================== BOOK APPOINTMENT (MODERN) ===================== -->
+<ng-container *ngIf="activeStepIndex === 2">
+  <ng-container *ngIf="!selectSlots">
+    <div class="modernBookTopRow">
+      <div class="modernBookTabs">
+        <button type="button" class="mTab" [class.active]="bookTab==='recommended'" (click)="bookTab='recommended'">
+          Recommended Centres
+        </button>
+        <button type="button" class="mTab" [class.active]="bookTab==='nearby'" (click)="bookTab='nearby'">
+          Nearby
+        </button>
+        <span class="muted">( Found {{ centres.length }} centers. )</span>
+      </div>
+  
+      <button type="button" class="modernOutlineBtn">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  
+    <div class="modernBookLayout">
+      <div>
+        <div class="modernDocTile"
+             *ngFor="let c of centres"
+             (click)="selectedCentreId=c.id"
+             [class.mSelected]="c.id===selectedCentreId">
+  
+          <div class="tileHead">
+            <div class="tileTitle">
+              <span class="mRadio" [class.on]="c.id===selectedCentreId"></span>
+              {{ c.name }}
+            </div>
+            <div class="tileReq" *ngIf="c.id===selectedCentreId">Selected</div>
+          </div>
+  
+          <div class="tileBody">
+            <div class="muted">{{ c.addressLine }}</div>
+  
+            <div class="mMeta" *ngIf="c.contactName || c.contactPhone">
+              <mat-icon>call</mat-icon>
+              <span>{{ c.contactName }} , {{ c.contactPhone }}</span>
+            </div>
+  
+            <div class="mTimes">
+              <div>{{ c.timingText }}</div>
+              <div>{{ c.lunchText }}</div>
+              <div>{{ c.openDaysText }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="modernPreview">
+        <div class="prevTitle">Map</div>
+        <iframe *ngIf="mapEmbedUrl" class="previewFrame" [src]="mapEmbedUrl"></iframe>
+      </div>
+    </div>
+  
+    <div class="modernBottom">
+      <button type="button" class="modernOutlineBtn" (click)="bookBack()">Back</button>
+  
+      <div class="modernRightBtns">
+        <button type="button" class="modernOutlineBtn" (click)="bookLater()">Book Later</button>
+        <button type="button" class="modernPrimaryBtn" (click)="bookContinue()">Continue</button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="selectSlots">
+    <div class="modernDayRow">
+      <button type="button" class="modernOutlineBtn" (click)="prevDays()">Previous</button>
+  
+      <div class="modernDayCards">
+        <div class="modernDayCard"
+             *ngFor="let day of visibleDays; let i=index"
+             [class.active]="i===selectedDayIndex"
+             (click)="selectDay(i)">
+          <div class="d">{{ fmtDay(day.date) }}</div>
+          <div class="w">{{ fmtWeekday(day.date) }}</div>
+          <div class="c">{{ day.availableCount }}</div>
+          <div class="s">Available Bookings</div>
+        </div>
+      </div>
+  
+      <button type="button" class="modernOutlineBtn" (click)="nextDays()">Next</button>
+    </div>
+  
+    <div class="modernSlotsLayout">
+      <div>
+        <div class="modernSessionTabs">
+          <button type="button" class="mTab" [class.active]="selectedSession==='morning'" (click)="setSession('morning')">
+            Morning
+          </button>
+          <button type="button" class="mTab" [class.active]="selectedSession==='afternoon'" (click)="setSession('afternoon')">
+            Afternoon
+          </button>
+        </div>
+  
+        <div class="modernSlotGrid">
+          <div class="modernSlot"
+               *ngFor="let s of filteredSlots"
+               [class.selected]="s.id===selectedSlotId"
+               (click)="selectSlot(s)">
+            <div class="t">{{ s.start }} - {{ s.end }}</div>
+            <div class="a">{{ s.available }} slots</div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="modernApplicants">
+        <div class="modernApplicantsHead">Available Applicants</div>
+        <div class="modernApplicantsBody">
+          <div class="modernApplicantRow" *ngFor="let a of applicants">
+            <div class="n" [class.selected]="a.id===selectedApplicantId" (click)="selectApplicant(a)">{{ a.name }}</div>
+            <button type="button" class="mPlus" (click)="toggleApplicant(a)">{{ a.expanded ? '−' : '+' }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modernBottom">
+      <button type="button" class="modernOutlineBtn" (click)="backFromSlotSelection()">Back</button>
+  
+      <div class="modernRightBtns">
+        <button type="button" class="modernOutlineBtn" (click)="bookLater()">Book Later</button>
+        <button type="button" class="modernPrimaryBtn" (click)="continueAfterSlotSelection()">
+          Continue
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+</ng-container>
+
+<!-- ===================== CONFIRMATION (MODERN) ===================== -->
+<ng-container *ngIf="activeStepIndex === 3">
+
+  <div class="modernConfirmSuccess">
+    <mat-icon>check_circle</mat-icon>
+    <div>
+      <b>{{ applicationId }}</b> : Application and Appointment details have been sent to the registered email and phone.
+    </div>
+  </div>
+
+  <div class="modernConfirmCard">
+
+    <div class="modernConfirmGrid">
+
+      <div class="kv">
+        <div class="k">Application ID :</div>
+        <div class="v">{{ applicationId }}</div>
+      </div>
+
+      <div class="kv">
+        <div class="k">Appointment Date &amp; Time :</div>
+        <div class="v">{{ appointmentDateTimeText }}</div>
+      </div>
+
+      <div class="kv">
+        <div class="k">Center Contact Number :</div>
+        <div class="v">{{ centerContactNumber }}</div>
+      </div>
+
+      <div class="qr-dummy-real"></div>     
+
+    </div>
+
+    <div class="modernConfirmLine"></div>
+
+    <div class="modernConfirmGrid2">
+      <div class="kv">
+        <div class="k">Name :</div>
+        <div class="v">{{ confirmName }}</div>
+      </div>
+      <div class="kv">
+        <div class="k">Center Name :</div>
+        <div class="v">{{ confirmCenterName }}</div>
+      </div>
+    </div>
+
+    <div class="modernConfirmLine"></div>
+
+    <div class="modernConfirmGuides">{{ guidelinesText }}</div>
+  </div>
+
+  <div class="modernBottom">
+    <button type="button" class="modernOutlineBtn" (click)="sendEmailSms()">Send Email/SMS</button>
+
+    <div class="modernRightBtns">
+      <button type="button" class="modernOutlineBtn" (click)="downloadPdf()">Download PDF</button>
+      <button type="button" class="modernPrimaryBtn" (click)="printConfirmation()">Print</button>
+    </div>
+  </div>
+
+</ng-container>
+
 
         </div>
       </div>

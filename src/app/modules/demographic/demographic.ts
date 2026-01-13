@@ -33,6 +33,39 @@ type DocItem = {
 
 type PreviewKind = 'pdf' | 'image' | 'none';
 
+type Centre = {
+  id: string;
+  name: string;
+  addressLine: string;
+  contactName?: string;
+  contactPhone?: string;
+  timingText?: string;  // "Timing : 09:00 am - 5:00 pm"
+  lunchText?: string;   // "Lunch : 1:00 pm - 2:00 pm"
+  openDaysText?: string; // "Open: MON, TUE, WED, THU, FRI"
+  lat: number;
+  lng: number;
+};
+
+type BookingDay = {
+  id: string;
+  date: Date;
+  availableCount: number; // e.g. 56
+};
+
+type BookingSlot = {
+  id: string;
+  start: string; // "09:00"
+  end: string;   // "09:15"
+  available: number; // e.g. 2
+  session: 'morning' | 'afternoon';
+};
+
+type Applicant = {
+  id: string;
+  name: string;
+  expanded?: boolean;
+};
+
 @Component({
   selector: 'app-demographic',
   standalone: true,
@@ -204,6 +237,69 @@ export class DemographicComponent {
   safePdfUrl: SafeResourceUrl | null = null;
   safeImgUrl: SafeUrl | null = null;
 
+  bookTab: 'recommended' | 'nearby' = 'recommended';
+
+  centres: Centre[] = [
+    {
+      id: 'vc-kingstown',
+      name: 'Kingstown Registration Centre',
+      addressLine: 'Bay Street, Kingstown, St. Vincent',
+      contactName: 'Registration Officer',
+      contactPhone: '784-456-1234',
+      timingText: 'Timing : 08:30 am - 4:30 pm',
+      lunchText: 'Lunch : 12:30 pm - 1:30 pm',
+      openDaysText: 'Open: MON, TUE, WED, THU, FRI',
+      lat: 13.1579,
+      lng: -61.2248
+    },
+    {
+      id: 'vc-calliaqua',
+      name: 'Calliaqua Community Centre',
+      addressLine: 'Main Road, Calliaqua, St. Vincent',
+      contactName: 'Community Officer',
+      contactPhone: '784-456-2345',
+      timingText: 'Timing : 09:00 am - 5:00 pm',
+      lunchText: 'Lunch : 1:00 pm - 2:00 pm',
+      openDaysText: 'Open: MON, TUE, THU, FRI',
+      lat: 13.1295,
+      lng: -61.1977
+    }
+  ];
+  
+  selectedCentreId = this.centres[0]?.id ?? '';
+
+  bookingDays: BookingDay[] = [];
+  selectedDayIndex = 0;
+
+  bookingSlots: BookingSlot[] = [];
+  selectedSession: 'morning' | 'afternoon' = 'morning';
+
+  selectedSlotId: string | null = null;
+
+  applicants: Applicant[] = [
+    { id: 'a2', name: 'Applicant 2', expanded: false },
+  ];
+  selectedApplicantId: string | null = null;
+
+
+  // ---------------------------
+// CONFIRMATION (Step 3)
+// ---------------------------
+applicationId = '57617601607359';
+appointmentDateTimeText = '19 Dec 2025, 9:15 AM';
+centerContactNumber = '745360421';
+
+confirmName = 'John Doe';
+confirmCenterName = 'Center Agdal';
+
+// QR value (string used to encode QR)
+qrValue = `APP:${this.applicationId}|DT:${this.appointmentDateTimeText}|CENTER:${this.confirmCenterName}`;
+
+// guidelines line
+guidelinesText =
+  '1. Guideline 1 2. Guideline 2 3. Guideline 3 4. Guideline 4 5. Guideline 5 6. Guideline 6 7. Guideline 7 8. Guideline 8 9. Guideline 9 10. Guideline 10';
+
+
   constructor(private dialog: MatDialog, private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
@@ -211,6 +307,7 @@ export class DemographicComponent {
   ngOnInit(): void {
     this.sub = this.themeService.theme$.subscribe((t) => (this.theme = t));
     this.openLanguageModal();
+    this.initBookingMock();
   }
 
   openLanguageModal() {
@@ -259,8 +356,8 @@ export class DemographicComponent {
 
   continueFromPreview() {
     // NOW stepper should move to next step
-    // this.goToBookAppointment();
-    this.goToDashboard();
+    this.goToBookAppointment();
+    // this.goToDashboard();
   }
 
   // -------------------------
@@ -395,6 +492,180 @@ export class DemographicComponent {
       }
     });
   }
+
+  get selectedCentre(): Centre | undefined {
+    return this.centres.find(c => c.id === this.selectedCentreId);
+  }
+  
+  // Map iframe url (OpenStreetMap embed)
+  get mapEmbedUrl(): SafeResourceUrl | null {
+    const c = this.selectedCentre;
+    if (!c) return null;
+    const d = 0.02;
+    const left = c.lng - d;
+    const right = c.lng + d;
+    const top = c.lat + d;
+    const bottom = c.lat - d;
+  
+    const url =
+      `https://www.openstreetmap.org/export/embed.html?bbox=${left}%2C${bottom}%2C${right}%2C${top}` +
+      `&layer=mapnik&marker=${c.lat}%2C${c.lng}`;
+  
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+  
+  // Book appointment actions (wire as you like)
+  bookBack() {
+    this.activeStepIndex = 1;
+    this.isUploadPreview = false;
+  }
+  
+  bookLater() {
+    this.goToDashboard();
+  }
+  
+  selectSlots: boolean = false;
+  bookContinue() {
+    // this.goToDashboard();
+    this.selectSlots = true;
+  }
+
+  continueAfterSlotSelection() {
+    // this.goToDashboard();
+    this.goToConfirmation();
+    this.selectSlots = false;
+  }
+
+  backFromSlotSelection() {
+    this.selectSlots = false;
+  }
+
+  initBookingMock() {
+    // create 3 days like screenshot
+    const base = new Date();
+    base.setHours(0, 0, 0, 0);
+  
+    this.bookingDays = [
+      { id: 'd1', date: new Date(base.getTime() + 1 * 24 * 60 * 60 * 1000), availableCount: 56 },
+      { id: 'd2', date: new Date(base.getTime() + 4 * 24 * 60 * 60 * 1000), availableCount: 56 },
+      { id: 'd3', date: new Date(base.getTime() + 5 * 24 * 60 * 60 * 1000), availableCount: 56 },
+    ];
+  
+    this.selectedDayIndex = 0;
+    this.selectedSession = 'morning';
+    this.selectedSlotId = null;
+  
+    this.bookingSlots = this.buildSlots();
+  }
+  
+  buildSlots(): BookingSlot[] {
+    // screenshot-style: 15 min slots (09:00 -> 13:00) morning
+    const slots: BookingSlot[] = [];
+    const make = (h: number, m: number) => `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  
+    // morning: 09:00 to 13:00
+    let h = 9, m = 0;
+    while (!(h === 13 && m === 0)) {
+      const start = make(h, m);
+      m += 15;
+      if (m >= 60) { h++; m = 0; }
+      const end = make(h, m);
+      slots.push({
+        id: `m-${start}`,
+        start,
+        end,
+        available: 2,
+        session: 'morning'
+      });
+    }
+  
+    // afternoon: example 13:00 -> 17:00
+    h = 13; m = 0;
+    while (!(h === 17 && m === 0)) {
+      const start = make(h, m);
+      m += 15;
+      if (m >= 60) { h++; m = 0; }
+      const end = make(h, m);
+      slots.push({
+        id: `a-${start}`,
+        start,
+        end,
+        available: 2,
+        session: 'afternoon'
+      });
+    }
+  
+    return slots;
+  }
+  
+  get visibleDays(): BookingDay[] {
+    // keep exactly 3 visible like screenshot
+    return this.bookingDays.slice(0, 3);
+  }
+  
+  selectDay(i: number) {
+    this.selectedDayIndex = i;
+    this.selectedSlotId = null;
+  }
+  
+  prevDays() {
+    // demo only: you can implement paging from API later
+  }
+  
+  nextDays() {
+    // demo only: you can implement paging from API later
+  }
+  
+  setSession(s: 'morning' | 'afternoon') {
+    this.selectedSession = s;
+    this.selectedSlotId = null;
+  }
+  
+  get filteredSlots(): BookingSlot[] {
+    return this.bookingSlots.filter(s => s.session === this.selectedSession);
+  }
+  
+  selectSlot(slot: BookingSlot) {
+    if (slot.available <= 0) return;
+    this.selectedSlotId = slot.id;
+  }
+  
+  toggleApplicant(a: Applicant) {
+    a.expanded = !a.expanded;
+  }
+  
+  selectApplicant(a: Applicant) {
+    this.selectedApplicantId = a.id;
+  }
+  
+  fmtDay(d: Date): string {
+    return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).format(d);
+  }
+  fmtWeekday(d: Date): string {
+    return new Intl.DateTimeFormat('en-GB', { weekday: 'long' }).format(d);
+  }
+  
+  get canContinueBooking(): boolean {
+    return !!this.selectedSlotId && !!this.selectedApplicantId;
+  }
+
+  // navigation
+goToConfirmation() {
+  this.activeStepIndex = 3;
+  this.isUploadPreview = false;
+}
+
+// actions (wire later)
+sendEmailSms() {
+  // integrate API later
+  console.log('sendEmailSms');
+}
+downloadPdf() {
+  console.log('downloadPdf');
+}
+printConfirmation() {
+  window.print();
+}
 
   changeTheme(t: ThemeName) {
     this.themeService.setTheme(t);
