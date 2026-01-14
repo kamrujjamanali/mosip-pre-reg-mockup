@@ -655,6 +655,12 @@ goToConfirmation() {
   this.isUploadPreview = false;
 }
 
+addApplicant() {
+  this.activeStepIndex = 0;
+  this.isUploadPreview = false;
+  this.selectSlots = false;
+}
+
 // actions (wire later)
 sendEmailSms() {
   // integrate API later

@@ -389,7 +389,7 @@
               <button class="dBtnOutline" type="button" (click)="backToUploadEdit()">BACK</button>
 
               <div class="dRightBtns">
-                <button class="dBtnOutline" type="button">ADD APPLICANT</button>
+                <button class="dBtnOutline" type="button" (click)="addApplicant()">ADD APPLICANT</button>
                 <button class="dBtnPink" type="button" (click)="continueFromPreview()">CONTINUE</button>
               </div>
             </div>
@@ -972,7 +972,7 @@
                     (click)="backToUploadEdit()">Back</button>
 
                   <div class="govRightBtns">
-                    <button mat-raised-button type="button" class="govOutlineBtn">Add Applicant</button>
+                    <button mat-raised-button type="button" class="govOutlineBtn" (click)="addApplicant()">Add Applicant</button>
                     <button mat-stroked-button type="button" class="govPrimaryBtn"
                       (click)="continueFromPreview()">Continue</button>
                   </div>
@@ -1471,7 +1471,7 @@
                 <button type="button" class="modernOutlineBtn" (click)="backToUploadEdit()">Back</button>
 
                 <div class="modernRightBtns">
-                  <button type="button" class="modernOutlineBtn">Add Applicant</button>
+                  <button type="button" class="modernOutlineBtn" (click)="addApplicant()">Add Applicant</button>
                   <button type="button" class="modernPrimaryBtn" (click)="continueFromPreview()">Continue</button>
                 </div>
               </div>

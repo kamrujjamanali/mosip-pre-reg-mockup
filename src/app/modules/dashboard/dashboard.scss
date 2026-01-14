@@ -29,19 +29,21 @@
   .btnIcon { margin-right: 8px; font-size: 18px; width: 18px; height: 18px; }
   
   .btnGrey {
-    background: #cfcfcf !important;
-    color: #222 !important;
-    font-weight: 800;
+    background: rgba(201, 201, 201, 1);
+    color: rgba(102, 102, 102, 1);
+    border: none;
+    // font-weight: 800;
     border-radius: 2px !important;
     height: 36px;
   }
   .btnPink {
     background: var(--accent) !important;
     color: #fff !important;
-    font-weight: 900;
+    // font-weight: 900;
     border-radius: 2px !important;
     height: 36px;
   }
+  
   .wFull { width: 100%; }
   
   /* Default body */
